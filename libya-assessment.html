@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>مِسبار ليبيا</title>
 <meta name="description" content="قاعدة معرفة ليبية لتقييم أي ملف: براهين بحث تعرف مؤسسات ليبيا ومصادر أرقامها، ومكتبة سوابق من الخارج، وسبع أدوات تحليل.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:site_name" content="Gravity">
+<meta property="og:title" content="مِسبار ليبيا">
+<meta property="og:description" content="قاعدة معرفة ليبية لتقييم أي ملف: براهين بحث تعرف مؤسسات ليبيا ومصادر أرقامها، ومكتبة سوابق من الخارج، وسبع أدوات تحليل.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -296,6 +302,10 @@ td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--a
 .rule-banner .mark{font-family:var(--mono);font-size:11px;background:var(--ink-3);color:var(--bg);
   padding:2px 7px;border-radius:5px;flex:0 0 auto;margin-top:2px}
 .rule-banner p{margin:0;font-size:13.3px}
+.iab-warn{background:var(--warn-bg);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);
+  border-radius:9px;padding:11px 14px;margin-bottom:14px;font-size:13.2px;display:flex;gap:10px;align-items:flex-start}
+.iab-warn b{color:var(--warn)}
+.iab-warn button{margin-inline-start:auto;background:transparent;border:none;color:var(--ink-3);cursor:pointer;font-size:17px;line-height:1;padding:0 4px}
 .foot{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);max-width:72ch}
 /* ── شريط أقسام الموقع ── */
 .sitenav{display:flex;gap:6px;flex-wrap:wrap;align-items:center;
@@ -330,11 +340,11 @@ td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--a
 <div class="layout">
 
   <nav class="rail" id="rail" aria-label="مراحل العمل">
-    <button data-stage="0" aria-current="true"><span class="num">٠</span> تهيئة</button>
-    <button data-stage="1"><span class="num">١</span> براهين البحث</button>
-    <button data-stage="2"><span class="num">٢</span> مكتبة السوابق</button>
-    <button data-stage="3"><span class="num">٣</span> الأدوات</button>
-    <button data-stage="4"><span class="num">٤</span> الهيكل والتصدير</button>
+    <button data-stage="0" aria-current="true"><span class="num">0</span> تهيئة</button>
+    <button data-stage="1"><span class="num">1</span> براهين البحث</button>
+    <button data-stage="2"><span class="num">2</span> مكتبة السوابق</button>
+    <button data-stage="3"><span class="num">3</span> الأدوات</button>
+    <button data-stage="4"><span class="num">4</span> الهيكل والتصدير</button>
   </nav>
 
   <main>
@@ -353,7 +363,7 @@ td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--a
 
     <div class="field">
       <label for="fTopic">الموضوع</label>
-      <div class="hint">جملة اسمية محدّدة. «انقطاع الكهرباء في مدينة س صيف ٢٠٢٦» أدقّ من «الطاقة».</div>
+      <div class="hint">جملة اسمية محدّدة. «انقطاع الكهرباء في مدينة س صيف 2026» أدقّ من «الطاقة».</div>
       <input type="text" id="fTopic" placeholder="مثال: أثر تقنين النقد الأجنبي على تجارة التجزئة">
     </div>
 
@@ -367,7 +377,7 @@ td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--a
       <div class="field">
         <label for="fHorizon">الأفق الزمني</label>
         <div class="hint">المدى الذي يلزمك الحكم عليه.</div>
-        <input type="text" id="fHorizon" placeholder="مثال: ٣ سنوات، مع نظرة إلى ١٠">
+        <input type="text" id="fHorizon" placeholder="مثال: 3 سنوات، مع نظرة إلى 10">
       </div>
       <div class="field">
         <label for="fAudience">من يستعمل التحليل</label>
@@ -385,7 +395,7 @@ td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--a
     <div class="field">
       <label for="fPremises">الفرضيات الحاكمة</label>
       <div class="hint">فرضيات إن سقطت واحدة منها وجب إعادة بناء ما بُني عليها. سطر لكل واحدة.</div>
-      <textarea id="fPremises" rows="3" placeholder="١. …&#10;٢. …&#10;٣. …"></textarea>
+      <textarea id="fPremises" rows="3" placeholder="1. …&#10;2. …&#10;3. …"></textarea>
     </div>
 
     <h3 class="sec">سلّم الثقة</h3>
@@ -435,12 +445,12 @@ td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--a
     <h2 class="stage-h">الأدوات</h2>
     <p class="stage-sub">سبع آلات تُمسك بنتائج البحث وتمنعها من التحوّل إلى انطباع. تُملأ أثناء العمل لا بعده.</p>
 
-    <h3 class="sec">١ · الاختبار السداسي</h3>
+    <h3 class="sec">1 · الاختبار السداسي</h3>
     <p class="muted" style="margin-bottom:6px">يُطبَّق على أي ترتيب مقترح: اتفاق، قرار تنظيمي، خطة استثمار، إعادة هيكلة. ثلاث إجابات سلبية فأكثر = الترتيب يُنتج أزمة جديدة مهما بدا واعداً.</p>
     <div id="sixTest"></div>
     <div class="verdict" id="verdict"><b>لم يُقيَّم بعد</b><span class="muted">أجب عن الأسئلة الستة.</span></div>
 
-    <h3 class="sec">٢ · مصفوفة تداخل الصلاحيات</h3>
+    <h3 class="sec">2 · مصفوفة تداخل الصلاحيات</h3>
     <p class="muted" style="margin-bottom:8px">لكل وظيفة: من يدّعيها، من يمارسها فعلاً، وأين العطب. كل صفّ موضع يستطيع طرفٌ أن يشلّ المنظومة منه.</p>
     <div class="tbl-wrap"><table id="tMandate"><thead><tr>
       <th style="min-width:130px">الوظيفة</th><th style="min-width:130px">مَن يدّعيها</th>
@@ -448,7 +458,7 @@ td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--a
     </tr></thead><tbody></tbody></table></div>
     <button class="btn btn-sm" data-add="tMandate">+ صفّ</button>
 
-    <h3 class="sec">٣ · لوحة العتبات</h3>
+    <h3 class="sec">3 · لوحة العتبات</h3>
     <p class="muted" style="margin-bottom:8px">حدِّد العتبة <em>قبل</em> أن تعرف القيمة. هذا وحده يمنعك من تسويغ ما يحدث بعد حدوثه.</p>
     <div class="tbl-wrap"><table id="tIndic"><thead><tr>
       <th style="min-width:140px">المؤشر</th><th style="min-width:80px">أخضر</th><th style="min-width:80px">أصفر</th>
@@ -456,7 +466,7 @@ td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--a
     </tr></thead><tbody></tbody></table></div>
     <button class="btn btn-sm" data-add="tIndic">+ صفّ</button>
 
-    <h3 class="sec">٤ · السيناريوهات والترجيحات</h3>
+    <h3 class="sec">4 · السيناريوهات والترجيحات</h3>
     <p class="muted" style="margin-bottom:8px">قيمة الترجيحات في ترتيبها النسبي لا في أرقامها. سجّل كيف تتغيّر مع الوقت — سجلّ تغيّرها هو تدريبك الحقيقي.</p>
     <div class="tbl-wrap"><table id="tScen"><thead><tr>
       <th style="min-width:130px">السيناريو</th><th style="min-width:70px">الترجيح ٪</th>
@@ -467,21 +477,21 @@ td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--a
       <span class="muted">المجموع: <span id="scenSum" class="num-cell">0</span>٪</span>
     </div>
 
-    <h3 class="sec">٥ · جدول التكذيب</h3>
+    <h3 class="sec">5 · جدول التكذيب</h3>
     <p class="muted" style="margin-bottom:8px">التحليل الذي لا يمكن تكذيبه ليس تحليلاً. لكل صفّ: واقعة لو حدثت لعنَت أنك أخطأت، وأين.</p>
     <div class="tbl-wrap"><table id="tFals"><thead><tr>
       <th style="min-width:230px">لو حدث هذا…</th><th style="min-width:230px">…لكان خطؤنا هنا</th><th style="width:38px"></th>
     </tr></thead><tbody></tbody></table></div>
     <button class="btn btn-sm" data-add="tFals">+ صفّ</button>
 
-    <h3 class="sec">٦ · الفجوات المعرفية</h3>
+    <h3 class="sec">6 · الفجوات المعرفية</h3>
     <p class="muted" style="margin-bottom:8px">ما لا تعرفه، مكتوباً. كل فجوة تصلح مشروع بحث — وإنجاز واحدة بجودة عالية أنفع من عشر أوراق موقف.</p>
     <div class="tbl-wrap"><table id="tGaps"><thead><tr>
       <th style="min-width:230px">الفجوة</th><th style="min-width:140px">لماذا تهمّ</th><th style="min-width:120px">كيف تُسدّ</th><th style="width:38px"></th>
     </tr></thead><tbody></tbody></table></div>
     <button class="btn btn-sm" data-add="tGaps">+ صفّ</button>
 
-    <h3 class="sec">٧ · سجل التصحيحات</h3>
+    <h3 class="sec">7 · سجل التصحيحات</h3>
     <p class="muted" style="margin-bottom:8px">لا يُحذف نصّ خاطئ — يُشطب ويُبقى مع سببه. هذا السجل هو الشيء الوحيد الذي يميّزك عن الخطاب الذي تنقده.</p>
     <div class="tbl-wrap"><table id="tCorr"><thead><tr>
       <th style="min-width:200px">ما قيل</th><th style="min-width:200px">الصحيح</th>
@@ -521,7 +531,7 @@ td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--a
 const $ = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
 const KEY = "misbar.ly.v1";
-const AR = n => n.toLocaleString("ar-EG");
+const AR = n => String(n);   // Libya uses Western digits 0-9, unlike Egypt/Gulf
 
 /* ═══════════ المحاور العامّة — تسري على أي ملف ليبي ═══════════ */
 const SPINE = [
@@ -529,7 +539,7 @@ const SPINE = [
    probe:[
     "من يسيطر فعلياً على الموقع الجغرافي أو المرفق محلّ الملف — على مستوى الحيّ أو المنشأة، لا المدينة.",
     "التمييز بين الجهة التي تحمل الصفة الرسمية والجهة التي تقبض فعلاً؛ وهل هما واحدة أم اثنتان.",
-    "هل تغيّرت السيطرة خلال ١٨ شهراً؟ اشتباك، تسليم، إعادة تموضع، اغتيال، قرار حلّ أو دمج.",
+    "هل تغيّرت السيطرة خلال 18 شهراً؟ اشتباك، تسليم، إعادة تموضع، اغتيال، قرار حلّ أو دمج.",
     "الانقسامات داخل كل معسكر لا بينها فقط — أعنف ما يجري في ليبيا كثيراً ما يقع بين حلفاء اسميّين.",
     "من يستطيع تعطيل الملف منفرداً؟ سمِّه، وسمِّ أداة التعطيل التي يملكها."]},
 
@@ -547,7 +557,7 @@ const SPINE = [
     "ما النصوص السارية على هذا الملف، ومن أصدرها؟ ابحث عن نصوص متعارضة صادرة عن جهتين.",
     "هل تدّعي أكثر من جهة الاختصاص نفسه؟ وثِّق ادّعاء كل واحدة بنصّه وتاريخه.",
     "القرارات القضائية ذات الصلة، وهل نُفِّذت فعلاً — التنفيذ في ليبيا سؤال منفصل عن الحكم.",
-    "هل صدر ما يغيّر الإطار خلال ١٢ شهراً: تعديل، قرار، اتفاق، مرسوم؟",
+    "هل صدر ما يغيّر الإطار خلال 12 شهراً: تعديل، قرار، اتفاق، مرسوم؟",
     "من المستفيد من بقاء الاختصاص غامضاً؟ الغموض في ليبيا نادراً ما يكون سهواً."]},
 
   {id:"external", t:"الفاعلون الخارجيون", why:"من يموّل ويضغط ويضمن، وماذا يريد",
@@ -624,12 +634,12 @@ const GROUPS = [
       "الجهات السيادية ذات الصلة بالملف، وكيف يُعيَّن رؤساؤها، ومن يصادق على التعيين.",
       "حالة كل جهة: موحّدة، منقسمة، متنازَع على رئاستها؟ تحقّق من الحالة الراهنة.",
       "أي جهة تدّعي الاختصاص نفسه، وبأي سند.",
-      "التعيينات والإقالات خلال ١٢ شهراً، ومن أصدرها وبأي صفة.",
+      "التعيينات والإقالات خلال 12 شهراً، ومن أصدرها وبأي صفة.",
       "أجهزة الرقابة: ديوان المحاسبة، هيئة الرقابة الإدارية — آخر تقرير منشور ومتى، وما تناوله.",
       "هل وصلت المساءلة إلى القمة السياسية أو العسكرية في أي حالة موثّقة، أم توقّفت دونها؟"]},
 
     {id:"local", t:"الحكم المحلي والبلديات", probe:[
-      "الاختصاصات التي يُسندها القانون ٥٩ لسنة ٢٠١٢ فعلاً — اقرأ النصّ، ولا تفترض أن البلدية تملك ما يُظنّ أنها تملكه.",
+      "الاختصاصات التي يُسندها القانون 59 لسنة 2012 فعلاً — اقرأ النصّ، ولا تفترض أن البلدية تملك ما يُظنّ أنها تملكه.",
       "ولاية التحصيل: هل تملك البلدية جباية أي إيراد؟ تحقّق.",
       "التحويلات المركزية: هل ثمة صيغة منشورة، أم تخصيص تقديري؟",
       "الانتخابات البلدية: أي جولات جرت، بأي إقبال، وأيها أُلغي أو عُلّق ولماذا — الإلغاء يتركّز جغرافياً.",
@@ -685,7 +695,7 @@ const GROUPS = [
       "التشكيلات العاملة في نطاق الملف: أسماؤها، تبعيتها الاسمية، وقائدها.",
       "من على كشوف الدولة: ابحث عن أي رقم لعدد المُدرَجين أمنياً وعسكرياً — وتوقّع ألّا تجد رقماً موحّداً.",
       "مواقع الإيراد التي تسيطر عليها تشكيلات: منافذ، موانئ، مطارات، حقول، مصارف.",
-      "الاشتباكات خلال ١٨ شهراً: من ضد من، وعلامَ، وكيف انتهت.",
+      "الاشتباكات خلال 18 شهراً: من ضد من، وعلامَ، وكيف انتهت.",
       "برامج الدمج والتسريح: ما أُعلن، وما نُفِّذ فعلاً، وكيف يُتحقَّق من الهوية.",
       "اقتصاد التهريب في نطاق الملف: وقود، بشر، سلع، ومن يحميه."]},
 
@@ -693,7 +703,7 @@ const GROUPS = [
       "الإطار القانوني الناظم للجمعيات فعلياً — أي قانون هو النافذ اليوم، وما شروطه؟ تحقّق من النصّ.",
       "صلاحيات الجهة المرخِّصة: هل تملك التفتيش والتجميد والحلّ بلا أمر قضائي؟",
       "شروط التمويل والتواصل مع جهات أجنبية.",
-      "سجل الاعتقال والتضييق خلال ٢٤ شهراً — من كل الأطراف، لا من طرف واحد.",
+      "سجل الاعتقال والتضييق خلال 24 شهراً — من كل الأطراف، لا من طرف واحد.",
       "الإعلام: المنابر العاملة، ملكيتها، وتصنيف ليبيا في مؤشرات حرية الصحافة.",
       "ما يعمل رغم القيود: مبادرات موثّقة بنتائج، لا بنوايا."]},
 
@@ -736,7 +746,7 @@ const CASES = [
   {t:"أنغولا", tag:"إعمار ما بعد حرب أهلية بعقود نفطية موجَّهة",
    look:"نموذج مقايضة النفط بالبنية التحتية وشروطه؛ من حصل على العقود ولماذا؛ ما الذي بقي عاملاً بعد عقد.",
    trap:"سرعة الإعمار المرئي تُخفي كلفة الدين والالتزامات طويلة الأجل."},
-  {t:"إندونيسيا", tag:"إصلاح دعم الوقود مع تحويل نقدي، ولامركزية بعد ١٩٩٩",
+  {t:"إندونيسيا", tag:"إصلاح دعم الوقود مع تحويل نقدي، ولامركزية بعد 1999",
    look:"تسلسل التعويض النقدي مقابل رفع السعر؛ آلية الاستهداف والوصول؛ ما الذي حدث للإيرادات الإقليمية بعد التفويض.",
    trap:"يُروى كنجاح كامل؛ ابحث عن الجولات التي تراجعت فيها الحكومة وعن أثر اللامركزية على الفساد المحلي."},
   {t:"اليمن والسودان", tag:"انقسام مصرف مركزي وتعدّد سلطات نقدية",
@@ -759,14 +769,38 @@ const domById = id => ALLD.find(d=>d.id===id);
 /* ───────── حالة ───────── */
 const blank = () => ({
   topic:"", domains:[], horizon:"", audience:"",
-  asOf:new Date().toLocaleDateString("ar-EG",{year:"numeric",month:"long",day:"numeric"}),
+  asOf:new Date().toLocaleDateString("ar-LY-u-nu-latn",{year:"numeric",month:"long",day:"numeric"}),
   premises:"", six:{}, theme:null,
   tMandate:[], tIndic:[], tScen:[], tFals:[], tGaps:[], tCorr:[]
 });
 let S = blank();
-function load(){ try{ const r=localStorage.getItem(KEY); if(r) S=Object.assign(blank(),JSON.parse(r)); }catch(e){} }
+let saveBlocked = false, dirty = false;   // set when the stored state was unreadable — never overwrite a corrupt record
+function load(){
+  let raw = null;
+  try{ raw = localStorage.getItem(KEY); }catch(e){ return; }   // storage blocked entirely: run unsaved
+  if(!raw) return;
+  try{ S = Object.assign(blank(), JSON.parse(raw)); }
+  catch(e){
+    // Parse failed. Autosaving now would replace a recoverable record with a blank one
+    // on the very next keystroke, so keep a copy and stop writing until the user decides.
+    saveBlocked = true;
+    try{ localStorage.setItem(KEY+".corrupt", raw); }catch(e2){}
+    setTimeout(()=>toast("تعذّرت قراءة المحفوظ — احتُفظ بنسخة، والحفظ التلقائي متوقّف"), 600);
+  }
+}
 let saveTimer;
-function save(){ clearTimeout(saveTimer); saveTimer=setTimeout(()=>{ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} },200); }
+function writeNow(){
+  if(saveBlocked || !dirty) return;
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); }
+  catch(e){
+    saveBlocked = true;
+    toast("تعذّر الحفظ — المساحة ممتلئة. صدِّر عملك الآن.");
+  }
+}
+function save(){ dirty = true; clearTimeout(saveTimer); saveTimer = setTimeout(writeNow, 200); }
+// Android evicts backgrounded tabs; a 200ms debounce loses the last edit without these.
+addEventListener("pagehide", ()=>{ clearTimeout(saveTimer); writeNow(); });
+addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden"){ clearTimeout(saveTimer); writeNow(); } });
 
 function ctx(){
   return {
@@ -788,15 +822,15 @@ const HEADER = () => {
 المستعمِل: ${c.audience}`;
 };
 const RULES = `قواعد مُلزِمة:
-١. وسم كل ادّعاء بدرجته: [مؤكَّد] [مُرجَّح] [تقدير] [مجهول].
-٢. لا تملأ فجوة بالتخمين. سجّلها في قسمها.
-٣. كل رقم في جدول: المؤشر | القيمة | التاريخ | المصدر | ملاحظة موثوقية.
-٤. إن استند ادّعاء إلى مصدر واحد، قل ذلك صراحةً في موضعه.
-٥. لا مصدر محايد في الملف الليبي. صنّف مصادرك بزاويتها، ورجّح ما أقرّه طرفان متخاصمان أو جهة فنية.
-٦. إن تعذّر الوصول إلى نصّ كامل واعتمدتَ على مقتطف بحث، قل ذلك.
-٧. ابحث بالعربية والإنجليزية معاً. كثير من التفاصيل لا يظهر إلا في الإعلام المحلي.
+1. وسم كل ادّعاء بدرجته: [مؤكَّد] [مُرجَّح] [تقدير] [مجهول].
+2. لا تملأ فجوة بالتخمين. سجّلها في قسمها.
+3. كل رقم في جدول: المؤشر | القيمة | التاريخ | المصدر | ملاحظة موثوقية.
+4. إن استند ادّعاء إلى مصدر واحد، قل ذلك صراحةً في موضعه.
+5. لا مصدر محايد في الملف الليبي. صنّف مصادرك بزاويتها، ورجّح ما أقرّه طرفان متخاصمان أو جهة فنية.
+6. إن تعذّر الوصول إلى نصّ كامل واعتمدتَ على مقتطف بحث، قل ذلك.
+7. ابحث بالعربية والإنجليزية معاً. كثير من التفاصيل لا يظهر إلا في الإعلام المحلي.
 
-بنية الإخراج (بهذه العناوين، بلا مقدّمة، ~١٢٠٠ كلمة):
+بنية الإخراج (بهذه العناوين، بلا مقدّمة، ~1200 كلمة):
 — «الأرقام»: جدول بكل رقم صلب عثرتَ عليه.
 — «الوقائع المؤكدة»: بالتاريخ والرابط.
 — «التقديرات والمتنازع عليه».
@@ -805,7 +839,7 @@ const RULES = `قواعد مُلزِمة:
 
 function briefText(item){
   const scope = item.probe.map((p,i)=>`${AR(i+1)}. ${p}`).join("\n");
-  return `بحث على محور «${item.t}»\n\n${HEADER()}\n\nاستعمل بحث الويب بكثافة (١٠ عمليات فأكثر). لا تكتب أي ملف.\n\nالنطاق:\n${scope}\n\n${RULES}`;
+  return `بحث على محور «${item.t}»\n\n${HEADER()}\n\nاستعمل بحث الويب بكثافة (10 عمليات فأكثر). لا تكتب أي ملف.\n\nالنطاق:\n${scope}\n\n${RULES}`;
 }
 function compText(){
   const c = ctx();
@@ -822,12 +856,12 @@ ${HEADER()}
 ${list}
 
 النطاق:
-١. لكل مقترح: أين جُرِّب، ومتى، وما الذي حدث فعلاً؟
-٢. أنماط الفشل أولاً — لا نماذج النجاح. أين انهار، ولماذا تحديداً؟
-٣. شروط النجاح: ما الذي كان متوفّراً حيث نجح وغائباً حيث فشل؟ وهل هو متوفّر في ليبيا؟
-٤. الآليات المفترضة: هل ثمة دليل كمّي يسندها، أم هي حجّة نظرية معقولة فقط؟
-٥. وجه الاختلاف عن ليبيا: ما الذي يجعل القياس ضعيفاً في كل حالة؟ قُله صراحةً.
-٦. احذر انحياز الناجي: الحالات المنشورة هي التي نجحت أو انهارت انهياراً مدوّياً.
+1. لكل مقترح: أين جُرِّب، ومتى، وما الذي حدث فعلاً؟
+2. أنماط الفشل أولاً — لا نماذج النجاح. أين انهار، ولماذا تحديداً؟
+3. شروط النجاح: ما الذي كان متوفّراً حيث نجح وغائباً حيث فشل؟ وهل هو متوفّر في ليبيا؟
+4. الآليات المفترضة: هل ثمة دليل كمّي يسندها، أم هي حجّة نظرية معقولة فقط؟
+5. وجه الاختلاف عن ليبيا: ما الذي يجعل القياس ضعيفاً في كل حالة؟ قُله صراحةً.
+6. احذر انحياز الناجي: الحالات المنشورة هي التي نجحت أو انهارت انهياراً مدوّياً.
 
 ${RULES}
 
@@ -843,16 +877,16 @@ ${HEADER()}
 
 أخرِج، بهذا الترتيب وبلا مقدّمة:
 
-١. «ما صمد» — الأطروحات التي تدعمها التقارير، وما الذي قوّاها تحديداً.
-٢. «ما انكسر» — نوعان:
+1. «ما صمد» — الأطروحات التي تدعمها التقارير، وما الذي قوّاها تحديداً.
+2. «ما انكسر» — نوعان:
    (أ) أخطاء وقائعية: ما قيل مقابل الصحيح، في جدول.
    (ب) أخطاء تصميمية: مقترحات بُنيت على افتراضات لم تصمد. هذه أخطر، فأفرِد لها مساحة.
    لكل واحد: الآلية المفترضة، وماذا تقول الأدلة، والصياغة المصحَّحة.
-٣. «الصورة المعدَّلة» — ما تغيّر في فهم الملف ككل لا في تفاصيله.
-٤. «الترجيحات» — السيناريوهات قبل وبعد، مع سبب كل تعديل.
-٥. «قائمة التعديلات» — جدول: الجزء | التعديل المطلوب.
-٦. «ما بقي مجهولاً» — بعد كل هذا البحث.
-٧. «تحفّظ منهجي» — حدود المسح نفسه، وأي الأرقام تحتاج تثبيتاً من مصدر أوّلي قبل النشر.
+3. «الصورة المعدَّلة» — ما تغيّر في فهم الملف ككل لا في تفاصيله.
+4. «الترجيحات» — السيناريوهات قبل وبعد، مع سبب كل تعديل.
+5. «قائمة التعديلات» — جدول: الجزء | التعديل المطلوب.
+6. «ما بقي مجهولاً» — بعد كل هذا البحث.
+7. «تحفّظ منهجي» — حدود المسح نفسه، وأي الأرقام تحتاج تثبيتاً من مصدر أوّلي قبل النشر.
 
 قواعد: احتفظ بأوسمة الثقة. لا تُرضِ التحليل السابق — إن ناقضته التقارير فقُل ذلك بوضوح.
 وميّز بين «لم نجد دليلاً» و«وجدنا دليلاً على النفي».`;
@@ -904,14 +938,14 @@ const COLS = {
 const SEED = {tMandate:[{},{},{}], tIndic:[{},{},{}], tScen:[{},{},{}], tFals:[{},{}], tGaps:[{},{},{}], tCorr:[{}]};
 
 const PARTS = [
-  ["٠","المنهج ودرجات الثقة","سلّم الثقة، حدود الوثيقة بصراحة، الفجوات المفتوحة، بروتوكول التحديث ودوريته."],
-  ["١","الأساس القيمي","لماذا تفشل الحلول التقنية؛ القيم الحاكمة ومحكّ عملي لكل منها؛ الاختبار السداسي؛ أخلاقيات الجهة التي تحلّل."],
-  ["٢","تقييم الموقف","خريطة الفاعلين؛ مصفوفة تداخل الصلاحيات؛ مسار المال؛ الفاعلون الخارجيون؛ محرّكات بقاء الأزمة."],
-  ["٣","نظام العمل","المبادئ التصميمية، والمسارات المترابطة، ومنطق التسلسل: ما الذي يجب أن يسبق ماذا، ولماذا."],
-  ["٤","الخطوات العملية","ما يستطيع المستعمِل فعله فعلاً بموارده الحقيقية — لا بموارد يتمنّاها. ويبدأ بالأسبوع الأول."],
-  ["٥","المؤشرات والسيناريوهات","لوحة العتبات، والسيناريوهات بترجيحاتها، وجدول التكذيب، وعلامات الإنذار."],
-  ["٦","المصادر","مصنّفة بزاوية كل فئة، مع قائمة صريحة بما تعذّر التحقّق منه."],
-  ["٧","سجل التصحيحات","ما أخطأتَ فيه وما صمد وما بقي مجهولاً. أثمن ما تنتجه، وأصعبه على النفس."]
+  ["0","المنهج ودرجات الثقة","سلّم الثقة، حدود الوثيقة بصراحة، الفجوات المفتوحة، بروتوكول التحديث ودوريته."],
+  ["1","الأساس القيمي","لماذا تفشل الحلول التقنية؛ القيم الحاكمة ومحكّ عملي لكل منها؛ الاختبار السداسي؛ أخلاقيات الجهة التي تحلّل."],
+  ["2","تقييم الموقف","خريطة الفاعلين؛ مصفوفة تداخل الصلاحيات؛ مسار المال؛ الفاعلون الخارجيون؛ محرّكات بقاء الأزمة."],
+  ["3","نظام العمل","المبادئ التصميمية، والمسارات المترابطة، ومنطق التسلسل: ما الذي يجب أن يسبق ماذا، ولماذا."],
+  ["4","الخطوات العملية","ما يستطيع المستعمِل فعله فعلاً بموارده الحقيقية — لا بموارد يتمنّاها. ويبدأ بالأسبوع الأول."],
+  ["5","المؤشرات والسيناريوهات","لوحة العتبات، والسيناريوهات بترجيحاتها، وجدول التكذيب، وعلامات الإنذار."],
+  ["6","المصادر","مصنّفة بزاوية كل فئة، مع قائمة صريحة بما تعذّر التحقّق منه."],
+  ["7","سجل التصحيحات","ما أخطأتَ فيه وما صمد وما بقي مجهولاً. أثمن ما تنتجه، وأصعبه على النفس."]
 ];
 
 /* ───────── بناء الواجهة ───────── */
@@ -1000,7 +1034,7 @@ function scoreSix(){
   const vals = SIX.map((_,i)=>S.six[i]);
   const done = vals.filter(Boolean).length;
   if(done<6){ v.className="verdict";
-    v.innerHTML='<b>لم يكتمل التقييم</b><span class="muted">أُجيب عن '+AR(done)+' من ٦.</span>'; return; }
+    v.innerHTML='<b>لم يكتمل التقييم</b><span class="muted">أُجيب عن '+AR(done)+' من 6.</span>'; return; }
   const bad = vals.filter(x=>x==="bad").length, mid = vals.filter(x=>x==="mid").length;
   if(bad>=3){ v.className="verdict bad";
     v.innerHTML='<b>'+AR(bad)+' إجابات سلبية — الترتيب يُنتج أزمة جديدة</b><span>مهما بدا واعداً، وأياً كان الغطاء الذي يحظى به. عالِج المواضع السلبية قبل أي تأييد.</span>'; }
@@ -1051,7 +1085,7 @@ function sumScen(){
   const el = $("#scenSum");
   el.textContent = AR(Math.round(n*10)/10);
   el.className = "num-cell " + (Math.abs(n-100)<=1 ? "sum-ok" : (n>0?"sum-bad":""));
-  el.title = Math.abs(n-100)<=1 ? "" : "المجموع لا يساوي ١٠٠٪";
+  el.title = Math.abs(n-100)<=1 ? "" : "المجموع لا يساوي 100٪";
 }
 function buildSkeleton(){
   $("#skeleton").innerHTML = PARTS.map(p=>
@@ -1115,14 +1149,14 @@ ${prem}
   md += `---\n\n# ثانياً · مكتبة السوابق\n\nحالات تشبه ليبيا في آلية بعينها لا في كل شيء. لا تُذكر النتائج — بل ما الذي تذهب لتقرأه.\n\n`;
   CASES.forEach(x=>{ md += `### ${x.t}\n**وجه الشبه:** ${x.tag}\n\n**ابحث عن:** ${x.look}\n\n**المصيدة:** ${x.trap}\n\n`; });
 
-  md += `---\n\n# ثالثاً · الأدوات\n\n## ١ · الاختبار السداسي\n\n| السؤال | التقدير |\n|---|---|\n${sixTxt}\n\n`;
+  md += `---\n\n# ثالثاً · الأدوات\n\n## 1 · الاختبار السداسي\n\n| السؤال | التقدير |\n|---|---|\n${sixTxt}\n\n`;
   md += `**القاعدة:** ثلاث إجابات سلبية فأكثر = الترتيب يُنتج أزمة جديدة مهما بدا واعداً.\n\n`;
-  md += `## ٢ · مصفوفة تداخل الصلاحيات\n\n${mdTable("tMandate",["الوظيفة","مَن يدّعيها","مَن يمارسها فعلاً","العطب"])}\n`;
-  md += `## ٣ · لوحة العتبات\n\n${mdTable("tIndic",["المؤشر","أخضر","أصفر","أحمر","القيمة الحالية","الحالة"])}\n`;
-  md += `## ٤ · السيناريوهات\n\n${mdTable("tScen",["السيناريو","الترجيح ٪","علامات مبكّرة","ماذا تفعل"])}\n`;
-  md += `## ٥ · جدول التكذيب\n\n${mdTable("tFals",["لو حدث هذا…","…لكان خطؤنا هنا"])}\n`;
-  md += `## ٦ · الفجوات المعرفية\n\n${mdTable("tGaps",["الفجوة","لماذا تهمّ","كيف تُسدّ"])}\n`;
-  md += `## ٧ · سجل التصحيحات\n\n${mdTable("tCorr",["ما قيل","الصحيح","الموضع","نوع الخطأ"])}\n`;
+  md += `## 2 · مصفوفة تداخل الصلاحيات\n\n${mdTable("tMandate",["الوظيفة","مَن يدّعيها","مَن يمارسها فعلاً","العطب"])}\n`;
+  md += `## 3 · لوحة العتبات\n\n${mdTable("tIndic",["المؤشر","أخضر","أصفر","أحمر","القيمة الحالية","الحالة"])}\n`;
+  md += `## 4 · السيناريوهات\n\n${mdTable("tScen",["السيناريو","الترجيح ٪","علامات مبكّرة","ماذا تفعل"])}\n`;
+  md += `## 5 · جدول التكذيب\n\n${mdTable("tFals",["لو حدث هذا…","…لكان خطؤنا هنا"])}\n`;
+  md += `## 6 · الفجوات المعرفية\n\n${mdTable("tGaps",["الفجوة","لماذا تهمّ","كيف تُسدّ"])}\n`;
+  md += `## 7 · سجل التصحيحات\n\n${mdTable("tCorr",["ما قيل","الصحيح","الموضع","نوع الخطأ"])}\n`;
   md += `\n---\n\n# رابعاً · هيكل الوثيقة\n\nالقيم تسبق الوقائع، والوقائع تسبق الحلول، والحلول تسبق التكتيك.\n\n`;
   PARTS.forEach(p=>{ md += `### ${p[0]} — ${p[1]}\n${p[2]}\n\n`; });
   md += `---\n\n_وُلِّد بـ«مِسبار ليبيا». الأداة لا تدّعي واقعة؛ كل رقم أعلاه من بحث المستعمِل ومسؤوليته._\n`;
@@ -1165,8 +1199,23 @@ function goStage(n){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
+
+// Opened from inside the Facebook or Instagram app: that webview keeps its OWN localStorage,
+// so anything saved here is invisible from the real browser. Say so rather than lose it silently.
+function inAppBrowserNotice(){
+  if(!/FBAN|FBAV|FB_IAB|Instagram/i.test(navigator.userAgent||"")) return;
+  const w = $(".wrap"); if(!w) return;
+  const d = document.createElement("div"); d.className="iab-warn";
+  d.innerHTML = '<span><b>أنت داخل متصفّح فيسبوك.</b> ما تحفظه هنا لن يظهر إذا فتحت الصفحة لاحقاً في متصفّحك العادي — ' +
+                'افتحها من قائمة «فتح في المتصفّح»، أو صدِّر عملك قبل أن تغادر.</span>' +
+                '<button type="button" aria-label="إخفاء">×</button>';
+  $("button",d).addEventListener("click",()=>d.remove());
+  w.insertBefore(d, w.firstChild);
+}
+
 function init(){
   load();
+  inAppBrowserNotice();
   bindField("#fTopic","topic",()=>{ refreshChip(); buildBriefs(); });
   bindField("#fHorizon","horizon",buildBriefs);
   bindField("#fAudience","audience",buildBriefs);
