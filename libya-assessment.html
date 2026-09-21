@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مِسبار ليبيا</title>
+<meta name="description" content="قاعدة معرفة ليبية لتقييم أي ملف: براهين بحث تعرف مؤسسات ليبيا ومصادر أرقامها، ومكتبة سوابق من الخارج، وسبع أدوات تحليل.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F2F3F6; --surface:#FFFFFF; --surface-2:#F7F8FB; --surface-3:#EDEFF5;
+  --ink:#171A22; --ink-2:#4B5162; --ink-3:#7A8194;
+  --line:#DCDFE9; --line-soft:#E9EBF2;
+  --accent:#2E3A7D; --accent-ink:#2E3A7D; --accent-soft:#E6E9F7; --on-accent:#FFFFFF;
+
+  /* درجات الثقة */
+  --c-sure:#1F5C4A;   --c-sure-bg:#E3F0EA;
+  --c-likely:#2E3A7D; --c-likely-bg:#E6E9F7;
+  --c-est:#8A5A12;    --c-est-bg:#F7EEDD;
+  --c-val:#6B3A76;    --c-val-bg:#F1E7F3;
+  --c-unk:#6E7480;    --c-unk-bg:#EDEFF3;
+
+  /* العتبات */
+  --ok:#2C6E49; --ok-bg:#E4F0E9;
+  --warn:#B07A12; --warn-bg:#F9EFD9;
+  --crit:#A32F2A; --crit-bg:#F8E5E3;
+
+  --display:"Amiri","Noto Naskh Arabic",Georgia,serif;
+  --body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --radius:10px;
+  --shadow:0 1px 2px rgba(23,26,34,.05), 0 10px 30px -22px rgba(23,26,34,.4);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#101219; --surface:#171A22; --surface-2:#1C202A; --surface-3:#232836;
+  --ink:#E6E8EE; --ink-2:#A6ADBF; --ink-3:#767D91;
+  --line:#2A2F3D; --line-soft:#222735;
+  --accent:#8C9BE8; --accent-ink:#A9B4EE; --accent-soft:#1E2440; --on-accent:#101219;
+  --c-sure:#6FC4A4; --c-sure-bg:#123027;
+  --c-likely:#8C9BE8; --c-likely-bg:#1E2440;
+  --c-est:#DFAE5E; --c-est-bg:#33260F;
+  --c-val:#C99BD4; --c-val-bg:#2C1A31;
+  --c-unk:#9198A8; --c-unk-bg:#22262F;
+  --ok:#67B98A; --ok-bg:#12281C;
+  --warn:#DFAE5E; --warn-bg:#31270F;
+  --crit:#E28A83; --crit-bg:#331A18;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -22px rgba(0,0,0,.9);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#101219; --surface:#171A22; --surface-2:#1C202A; --surface-3:#232836;
+  --ink:#E6E8EE; --ink-2:#A6ADBF; --ink-3:#767D91;
+  --line:#2A2F3D; --line-soft:#222735;
+  --accent:#8C9BE8; --accent-ink:#A9B4EE; --accent-soft:#1E2440; --on-accent:#101219;
+  --c-sure:#6FC4A4; --c-sure-bg:#123027;
+  --c-likely:#8C9BE8; --c-likely-bg:#1E2440;
+  --c-est:#DFAE5E; --c-est-bg:#33260F;
+  --c-val:#C99BD4; --c-val-bg:#2C1A31;
+  --c-unk:#9198A8; --c-unk-bg:#22262F;
+  --ok:#67B98A; --ok-bg:#12281C;
+  --warn:#DFAE5E; --warn-bg:#31270F;
+  --crit:#E28A83; --crit-bg:#331A18;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -22px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:var(--body); font-size:15px; line-height:1.65;
+  direction:rtl; text-align:right;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+[hidden]{display:none!important}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ── شريط علوي ── */
+.topbar{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:40;
+  background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:saturate(1.4) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-in{
+  max-width:1180px; margin:0 auto; padding-block:10px; padding-inline:16px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.brand{display:flex;align-items:baseline;gap:9px;margin-inline-end:auto;min-width:0}
+.brand b{font-family:var(--display);font-size:24px;font-weight:700;letter-spacing:.01em;line-height:1}
+.brand span{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.topic-chip{
+  font-size:12.5px; color:var(--accent-ink); background:var(--accent-soft);
+  border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);
+  padding:4px 10px; border-radius:99px; max-width:min(46vw,340px);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.btn{
+  background:var(--surface-2); color:var(--ink); border:1px solid var(--line);
+  padding:7px 13px; border-radius:8px; cursor:pointer; font-size:13.5px; font-weight:500;
+  transition:background .15s,border-color .15s;
+}
+.btn:hover{background:var(--surface-3)}
+.btn-primary{background:var(--accent);color:var(--on-accent);border-color:transparent}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-sm{padding:4px 9px;font-size:12px;border-radius:6px}
+
+/* ── تخطيط ── */
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:22px 64px}
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:26px;align-items:start}
+.layout > main{min-width:0}
+@media(max-width:900px){.layout{grid-template-columns:minmax(0,1fr);gap:16px}}
+
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);display:flex;flex-direction:column;gap:6px}
+@media(max-width:900px){
+  .rail{position:static;flex-direction:row;overflow-x:auto;gap:8px;padding-bottom:4px;
+        scrollbar-width:thin;border-bottom:1px solid var(--line)}
+}
+.rail button{
+  display:flex;align-items:center;gap:10px;width:100%;
+  background:transparent;border:1px solid transparent;border-radius:9px;
+  padding:9px 11px;cursor:pointer;text-align:right;font-size:14px;color:var(--ink-2);
+  transition:background .15s,color .15s;
+}
+@media(max-width:900px){.rail button{width:auto;white-space:nowrap;flex:0 0 auto}}
+.rail button:hover{background:var(--surface-2);color:var(--ink)}
+.rail button[aria-current="true"]{background:var(--surface);border-color:var(--line);color:var(--ink);font-weight:600;box-shadow:var(--shadow)}
+.rail .num{
+  font-family:var(--mono);font-size:11px;width:20px;height:20px;flex:0 0 auto;
+  display:grid;place-items:center;border-radius:5px;
+  background:var(--surface-3);color:var(--ink-3);
+}
+.rail button[aria-current="true"] .num{background:var(--accent);color:var(--on-accent)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+@media(max-width:600px){.panel{padding:16px}}
+.panel + .panel{margin-top:16px}
+
+h1,h2,h3{text-wrap:balance;margin:0}
+.stage-h{font-family:var(--display);font-size:29px;font-weight:700;line-height:1.25;margin-bottom:4px}
+.stage-sub{color:var(--ink-2);font-size:14.5px;max-width:64ch;margin-bottom:20px}
+h3.sec{font-size:16.5px;font-weight:600;margin:26px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line-soft)}
+h3.sec:first-of-type{margin-top:0}
+p{margin:0 0 12px;max-width:68ch}
+.muted{color:var(--ink-3);font-size:13px}
+
+/* ── نموذج ── */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--ink-2)}
+.field .hint{font-size:12px;color:var(--ink-3);margin-bottom:6px;font-weight:400}
+input[type=text],textarea,select{
+  width:100%;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:8px;padding:9px 11px;font-size:14.5px;
+}
+textarea{resize:vertical;min-height:72px;line-height:1.6}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--accent);background:var(--surface)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.grid2{grid-template-columns:1fr}}
+
+.radios{display:flex;flex-wrap:wrap;gap:8px}
+.radios label{
+  display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+  border:1px solid var(--line);background:var(--surface-2);
+  padding:7px 12px;border-radius:99px;font-size:13.5px;font-weight:500;margin:0;
+}
+.radios label:has(input:checked){background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink)}
+.radios input{accent-color:var(--accent);margin:0}
+
+/* ── بطاقات الثقة ── */
+.conf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:10px}
+.conf{border-radius:9px;padding:11px 13px;border:1px solid transparent}
+.conf b{display:block;font-size:14px;margin-bottom:3px}
+.conf span{font-size:12.5px;line-height:1.5;display:block;color:var(--ink-2)}
+.c-sure{background:var(--c-sure-bg);border-color:color-mix(in srgb,var(--c-sure) 30%,transparent)}
+.c-sure b{color:var(--c-sure)}
+.c-likely{background:var(--c-likely-bg);border-color:color-mix(in srgb,var(--c-likely) 30%,transparent)}
+.c-likely b{color:var(--c-likely)}
+.c-est{background:var(--c-est-bg);border-color:color-mix(in srgb,var(--c-est) 30%,transparent)}
+.c-est b{color:var(--c-est)}
+.c-val{background:var(--c-val-bg);border-color:color-mix(in srgb,var(--c-val) 30%,transparent)}
+.c-val b{color:var(--c-val)}
+.c-unk{background:var(--c-unk-bg);border-color:color-mix(in srgb,var(--c-unk) 30%,transparent);border-style:dashed}
+.c-unk b{color:var(--c-unk)}
+
+/* ── براهين ── */
+.brief{border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;background:var(--surface-2);overflow:hidden}
+.brief-head{display:flex;align-items:center;gap:11px;padding:12px 14px;cursor:pointer;user-select:none}
+.brief-head:hover{background:var(--surface-3)}
+.brief-head .num{font-family:var(--mono);font-size:11.5px;width:22px;height:22px;flex:0 0 auto;
+  display:grid;place-items:center;border-radius:6px;background:var(--accent);color:var(--on-accent)}
+.brief-head h4{margin:0;font-size:15px;font-weight:600;flex:1;min-width:0}
+.brief-head .why{font-size:12px;color:var(--ink-3);display:block;font-weight:400;margin-top:1px}
+.brief-body{border-top:1px solid var(--line);padding:0}
+pre.prompt{
+  margin:0;padding:14px;font-family:var(--body);font-size:13px;line-height:1.85;
+  white-space:pre-wrap;word-wrap:break-word;background:var(--surface);color:var(--ink-2);
+  max-height:420px;overflow:auto;direction:rtl;text-align:right;
+}
+.brief-actions{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--line-soft);background:var(--surface-2)}
+.chev{color:var(--ink-3);font-size:12px;transition:transform .18s}
+.brief[data-open="1"] .chev{transform:rotate(180deg)}
+
+/* ── جداول الأدوات ── */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px;margin-bottom:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{background:var(--surface-3);font-weight:600;font-size:12.5px;color:var(--ink-2);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td input[type=text],td select,td textarea{border:1px solid transparent;background:transparent;padding:5px 7px;font-size:13.5px}
+td input[type=text]:hover,td select:hover{border-color:var(--line)}
+td input[type=text]:focus,td select:focus,td textarea:focus{border-color:var(--accent);background:var(--surface)}
+.num-cell{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.row-del{background:transparent;border:none;color:var(--ink-3);cursor:pointer;font-size:16px;line-height:1;padding:4px 6px;border-radius:5px}
+.row-del:hover{color:var(--crit);background:var(--crit-bg)}
+
+.rag{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:2px 9px;border-radius:99px}
+.rag::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.rag-ok{color:var(--ok);background:var(--ok-bg)}
+.rag-warn{color:var(--warn);background:var(--warn-bg)}
+.rag-crit{color:var(--crit);background:var(--crit-bg)}
+
+/* ── الاختبار السداسي ── */
+.q{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;
+   padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.q:last-of-type{border-bottom:none}
+.q-txt b{display:block;font-size:14.5px;margin-bottom:2px}
+.q-txt span{font-size:12.5px;color:var(--ink-3);display:block;max-width:56ch}
+.q-opts{display:flex;gap:5px;flex:0 0 auto}
+.q-opts label{cursor:pointer}
+.q-opts input{position:absolute;opacity:0;pointer-events:none}
+.q-opts span{
+  display:grid;place-items:center;width:34px;height:30px;border-radius:7px;
+  border:1px solid var(--line);background:var(--surface-2);font-size:14px;font-weight:600;color:var(--ink-3)
+}
+.q-opts input:checked + span{color:var(--on-accent);border-color:transparent}
+.q-opts input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+.q-opts .v-ok input:checked + span{background:var(--ok)}
+.q-opts .v-mid input:checked + span{background:var(--warn)}
+.q-opts .v-bad input:checked + span{background:var(--crit)}
+.verdict{margin-top:16px;padding:14px 16px;border-radius:9px;border:1px solid var(--line);background:var(--surface-2)}
+.verdict b{font-size:16px;display:block;margin-bottom:3px}
+.verdict.bad{background:var(--crit-bg);border-color:color-mix(in srgb,var(--crit) 30%,transparent)}
+.verdict.bad b{color:var(--crit)}
+.verdict.mid{background:var(--warn-bg);border-color:color-mix(in srgb,var(--warn) 30%,transparent)}
+.verdict.mid b{color:var(--warn)}
+.verdict.good{background:var(--ok-bg);border-color:color-mix(in srgb,var(--ok) 30%,transparent)}
+.verdict.good b{color:var(--ok)}
+
+/* ── تنبيهات ── */
+.note{
+  border-inline-start:3px solid var(--accent); background:var(--surface-2);
+  padding:12px 14px; border-radius:0 9px 9px 0; margin:0 0 16px; font-size:13.5px;
+}
+.note.warn{border-color:var(--warn);background:var(--warn-bg)}
+.note b{color:var(--accent-ink)}
+.note.warn b{color:var(--warn)}
+.note p:last-child{margin-bottom:0}
+
+.skel{border:1px solid var(--line);border-radius:9px;background:var(--surface-2);padding:13px 15px;margin-bottom:9px}
+.skel b{font-size:14.5px;display:block;margin-bottom:2px}
+.skel b .k{font-family:var(--mono);font-size:11.5px;color:var(--accent-ink);background:var(--accent-soft);
+  padding:1px 6px;border-radius:5px;margin-inline-end:7px;vertical-align:1px}
+.skel p{font-size:13px;color:var(--ink-2);margin:0;max-width:70ch}
+
+.sum-bad{color:var(--crit);font-weight:600}
+.sum-ok{color:var(--ok);font-weight:600}
+
+.toast{
+  position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:99px;font-size:13.5px;
+  z-index:80;box-shadow:0 8px 30px -10px rgba(0,0,0,.5);
+}
+.dom-group{margin-bottom:14px}
+.dom-group h5{margin:0 0 7px;font-size:12.5px;font-weight:600;color:var(--ink-3);letter-spacing:.02em}
+.dom-chips{display:flex;flex-wrap:wrap;gap:7px}
+.dom-chips label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:1px solid var(--line);
+  background:var(--surface-2);padding:6px 11px;border-radius:99px;font-size:13px;font-weight:500}
+.dom-chips label:has(input:checked){background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink)}
+.dom-chips input{accent-color:var(--accent);margin:0}
+.dom-chips label:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.case{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-2);padding:14px 16px;margin-bottom:10px}
+.case h4{margin:0 0 2px;font-size:15.5px;font-weight:600}
+.case .tagline{font-size:12.5px;color:var(--accent-ink);margin-bottom:8px;display:block}
+.case dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:13.2px}
+.case dt{font-weight:600;color:var(--ink-3);white-space:nowrap}
+.case dd{margin:0;color:var(--ink-2)}
+@media(max-width:560px){.case dl{grid-template-columns:1fr;gap:1px}.case dd{margin-bottom:6px}}
+.rule-banner{display:flex;gap:11px;align-items:flex-start;background:var(--c-unk-bg);
+  border:1px dashed color-mix(in srgb,var(--c-unk) 40%,transparent);border-radius:9px;padding:12px 14px;margin-bottom:18px}
+.rule-banner .mark{font-family:var(--mono);font-size:11px;background:var(--ink-3);color:var(--bg);
+  padding:2px 7px;border-radius:5px;flex:0 0 auto;margin-top:2px}
+.rule-banner p{margin:0;font-size:13.3px}
+.foot{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);max-width:72ch}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand"><b>مِسبار</b><span>قاعدة معرفة ليبية</span></div>
+    <span class="topic-chip" id="chipTopic" hidden></span>
+    <button class="btn btn-sm" id="btnTheme" title="تبديل السمة">◐</button>
+    <button class="btn btn-sm btn-primary" id="btnExport">تصدير</button>
+  </div>
+</header>
+
+<div class="wrap">
+<div class="layout">
+
+  <nav class="rail" id="rail" aria-label="مراحل العمل">
+    <button data-stage="0" aria-current="true"><span class="num">٠</span> تهيئة</button>
+    <button data-stage="1"><span class="num">١</span> براهين البحث</button>
+    <button data-stage="2"><span class="num">٢</span> مكتبة السوابق</button>
+    <button data-stage="3"><span class="num">٣</span> الأدوات</button>
+    <button data-stage="4"><span class="num">٤</span> الهيكل والتصدير</button>
+  </nav>
+
+  <main>
+
+  <!-- ══ 0 · تهيئة ══ -->
+  <section class="panel" data-panel="0">
+    <h2 class="stage-h">تهيئة الملف</h2>
+    <p class="stage-sub">حدِّد الموضوع والمجالات التي يمسّها. من هنا تتولّد براهين البحث كلّها.</p>
+
+    <div class="rule-banner">
+      <span class="mark">قاعدة</span>
+      <p><b>هذه الأداة لا تدّعي واقعة واحدة عن ليبيا.</b> تعرف <em>البنية</em>: أي جهة تحمل أي اختصاص،
+      وأين تُنشر الأرقام، وما المصائد المتكرّرة. أمّا الأرقام والحالة الراهنة فتأتي من بحثك أنت —
+      لأن أداةً تُلزمك بسلّم ثقة لا يصحّ أن تخالفه.</p>
+    </div>
+
+    <div class="field">
+      <label for="fTopic">الموضوع</label>
+      <div class="hint">جملة اسمية محدّدة. «انقطاع الكهرباء في مدينة س صيف ٢٠٢٦» أدقّ من «الطاقة».</div>
+      <input type="text" id="fTopic" placeholder="مثال: أثر تقنين النقد الأجنبي على تجارة التجزئة">
+    </div>
+
+    <div class="field">
+      <label>المجالات التي يمسّها</label>
+      <div class="hint">اختر ما يمسّه الملف فعلاً. كل مجال يضيف برهان بحث خاصاً به. الأربعة العامّة تُضاف دائماً.</div>
+      <div id="domains"></div>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label for="fHorizon">الأفق الزمني</label>
+        <div class="hint">المدى الذي يلزمك الحكم عليه.</div>
+        <input type="text" id="fHorizon" placeholder="مثال: ٣ سنوات، مع نظرة إلى ١٠">
+      </div>
+      <div class="field">
+        <label for="fAudience">من يستعمل التحليل</label>
+        <div class="hint">يحدّد ما يُعدّ «خطوة قابلة للتنفيذ».</div>
+        <input type="text" id="fAudience" placeholder="مثال: مجموعة مدنية بلا سلطة ولا تمويل">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="fAsOf">تاريخ حدّ المعرفة</label>
+      <div class="hint">يُثبَّت في كل برهان، وكل ما بعده يلزم التحقّق منه.</div>
+      <input type="text" id="fAsOf">
+    </div>
+
+    <div class="field">
+      <label for="fPremises">الفرضيات الحاكمة</label>
+      <div class="hint">فرضيات إن سقطت واحدة منها وجب إعادة بناء ما بُني عليها. سطر لكل واحدة.</div>
+      <textarea id="fPremises" rows="3" placeholder="١. …&#10;٢. …&#10;٣. …"></textarea>
+    </div>
+
+    <h3 class="sec">سلّم الثقة</h3>
+    <p class="muted" style="margin-bottom:12px">كل ادّعاء في كل مخرَج يحمل واحداً من هذه. الخلط بينها هو أصل النقاش العقيم.</p>
+    <div class="conf-grid">
+      <div class="conf c-sure"><b>[مؤكَّد]</b><span>موثّق من مصدر أوّلي أو مصدرين مستقلّين. ابنِ عليه.</span></div>
+      <div class="conf c-likely"><b>[مُرجَّح]</b><span>أدلة غير مكتملة أو مصدر واحد جيّد. ابنِ بحذر وخطة بديلة.</span></div>
+      <div class="conf c-est"><b>[تقدير]</b><span>استنتاج تحليلي. فرضية عمل لا أساس قرار.</span></div>
+      <div class="conf c-val"><b>[قيمة]</b><span>موقف معياري. يُناقَش بالحجّة لا بالأرقام.</span></div>
+      <div class="conf c-unk"><b>[مجهول]</b><span>فجوة معلومة. لا تُملأ بالتخمين — تُسجَّل كمهمّة بحث.</span></div>
+    </div>
+    <div class="note" style="margin-top:16px">
+      <p><b>القاعدة الصارمة:</b> لا يُبنى قرار على ادّعاء أقلّ من <em>[مُرجَّح]</em>، ما لم يكن القرار نفسه قابلاً للتراجع بتكلفة منخفضة.</p>
+    </div>
+  </section>
+
+  <!-- ══ 1 · براهين ══ -->
+  <section class="panel" data-panel="1" hidden>
+    <h2 class="stage-h">براهين البحث</h2>
+    <p class="stage-sub">أربعة محاور عامّة تسري على أي ملف ليبي، ثم برهان لكل مجال اخترته، ثم السوابق، ثم التركيب والتصحيح.</p>
+    <div class="note warn">
+      <p><b>المصيدة الليبية المتكرّرة:</b> أي ملف — سوق أو خدمة أو سياسة — ينتهي عند سؤالين:
+      <em>من يوقّع على النقد الأجنبي؟</em> و<em>مَن يحمل السلاح في الموقع؟</em>
+      المحوران العامّان الثاني والرابع مخصّصان لهما. لا تُسقطهما ظنّاً أن ملفّك «تقني».</p>
+    </div>
+    <div id="briefs"></div>
+  </section>
+
+  <!-- ══ 2 · سوابق ══ -->
+  <section class="panel" data-panel="2" hidden>
+    <h2 class="stage-h">مكتبة السوابق</h2>
+    <p class="stage-sub">حالات من الخارج تشبه ليبيا في آلية بعينها — لا في كل شيء. لكل حالة: لماذا تُقارَن، وما الذي تبحث عنه، والمصيدة المعروفة.</p>
+    <div class="rule-banner">
+      <span class="mark">قاعدة</span>
+      <p>لا تُذكر هنا نتيجة أي حالة، بل <b>ما الذي تذهب لتقرأه</b>. والسبب أن نتائج هذه الحالات
+      متنازع عليها في أدبياتها نفسها، ونقلها جاهزةً هو بالضبط الخطأ الذي تحاول الأداة منعه.</p>
+    </div>
+    <div class="note warn">
+      <p><b>انحياز الناجي:</b> الحالات المنشورة هي التي نجحت أو انهارت انهياراً مدوّياً.
+      أمّا التي تعثّرت بهدوء فلا يكتب عنها أحد — ومعظم الحالات من هذا النوع.</p>
+    </div>
+    <div id="cases"></div>
+  </section>
+
+  <!-- ══ 3 · أدوات ══ -->
+  <section class="panel" data-panel="3" hidden>
+    <h2 class="stage-h">الأدوات</h2>
+    <p class="stage-sub">سبع آلات تُمسك بنتائج البحث وتمنعها من التحوّل إلى انطباع. تُملأ أثناء العمل لا بعده.</p>
+
+    <h3 class="sec">١ · الاختبار السداسي</h3>
+    <p class="muted" style="margin-bottom:6px">يُطبَّق على أي ترتيب مقترح: اتفاق، قرار تنظيمي، خطة استثمار، إعادة هيكلة. ثلاث إجابات سلبية فأكثر = الترتيب يُنتج أزمة جديدة مهما بدا واعداً.</p>
+    <div id="sixTest"></div>
+    <div class="verdict" id="verdict"><b>لم يُقيَّم بعد</b><span class="muted">أجب عن الأسئلة الستة.</span></div>
+
+    <h3 class="sec">٢ · مصفوفة تداخل الصلاحيات</h3>
+    <p class="muted" style="margin-bottom:8px">لكل وظيفة: من يدّعيها، من يمارسها فعلاً، وأين العطب. كل صفّ موضع يستطيع طرفٌ أن يشلّ المنظومة منه.</p>
+    <div class="tbl-wrap"><table id="tMandate"><thead><tr>
+      <th style="min-width:130px">الوظيفة</th><th style="min-width:130px">مَن يدّعيها</th>
+      <th style="min-width:130px">مَن يمارسها فعلاً</th><th style="min-width:150px">العطب</th><th style="width:38px"></th>
+    </tr></thead><tbody></tbody></table></div>
+    <button class="btn btn-sm" data-add="tMandate">+ صفّ</button>
+
+    <h3 class="sec">٣ · لوحة العتبات</h3>
+    <p class="muted" style="margin-bottom:8px">حدِّد العتبة <em>قبل</em> أن تعرف القيمة. هذا وحده يمنعك من تسويغ ما يحدث بعد حدوثه.</p>
+    <div class="tbl-wrap"><table id="tIndic"><thead><tr>
+      <th style="min-width:140px">المؤشر</th><th style="min-width:80px">أخضر</th><th style="min-width:80px">أصفر</th>
+      <th style="min-width:80px">أحمر</th><th style="min-width:120px">القيمة الحالية</th><th style="min-width:100px">الحالة</th><th style="width:38px"></th>
+    </tr></thead><tbody></tbody></table></div>
+    <button class="btn btn-sm" data-add="tIndic">+ صفّ</button>
+
+    <h3 class="sec">٤ · السيناريوهات والترجيحات</h3>
+    <p class="muted" style="margin-bottom:8px">قيمة الترجيحات في ترتيبها النسبي لا في أرقامها. سجّل كيف تتغيّر مع الوقت — سجلّ تغيّرها هو تدريبك الحقيقي.</p>
+    <div class="tbl-wrap"><table id="tScen"><thead><tr>
+      <th style="min-width:130px">السيناريو</th><th style="min-width:70px">الترجيح ٪</th>
+      <th style="min-width:170px">علامات مبكّرة</th><th style="min-width:150px">ماذا تفعل</th><th style="width:38px"></th>
+    </tr></thead><tbody></tbody></table></div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <button class="btn btn-sm" data-add="tScen">+ صفّ</button>
+      <span class="muted">المجموع: <span id="scenSum" class="num-cell">0</span>٪</span>
+    </div>
+
+    <h3 class="sec">٥ · جدول التكذيب</h3>
+    <p class="muted" style="margin-bottom:8px">التحليل الذي لا يمكن تكذيبه ليس تحليلاً. لكل صفّ: واقعة لو حدثت لعنَت أنك أخطأت، وأين.</p>
+    <div class="tbl-wrap"><table id="tFals"><thead><tr>
+      <th style="min-width:230px">لو حدث هذا…</th><th style="min-width:230px">…لكان خطؤنا هنا</th><th style="width:38px"></th>
+    </tr></thead><tbody></tbody></table></div>
+    <button class="btn btn-sm" data-add="tFals">+ صفّ</button>
+
+    <h3 class="sec">٦ · الفجوات المعرفية</h3>
+    <p class="muted" style="margin-bottom:8px">ما لا تعرفه، مكتوباً. كل فجوة تصلح مشروع بحث — وإنجاز واحدة بجودة عالية أنفع من عشر أوراق موقف.</p>
+    <div class="tbl-wrap"><table id="tGaps"><thead><tr>
+      <th style="min-width:230px">الفجوة</th><th style="min-width:140px">لماذا تهمّ</th><th style="min-width:120px">كيف تُسدّ</th><th style="width:38px"></th>
+    </tr></thead><tbody></tbody></table></div>
+    <button class="btn btn-sm" data-add="tGaps">+ صفّ</button>
+
+    <h3 class="sec">٧ · سجل التصحيحات</h3>
+    <p class="muted" style="margin-bottom:8px">لا يُحذف نصّ خاطئ — يُشطب ويُبقى مع سببه. هذا السجل هو الشيء الوحيد الذي يميّزك عن الخطاب الذي تنقده.</p>
+    <div class="tbl-wrap"><table id="tCorr"><thead><tr>
+      <th style="min-width:200px">ما قيل</th><th style="min-width:200px">الصحيح</th>
+      <th style="min-width:110px">الموضع</th><th style="min-width:120px">نوع الخطأ</th><th style="width:38px"></th>
+    </tr></thead><tbody></tbody></table></div>
+    <button class="btn btn-sm" data-add="tCorr">+ صفّ</button>
+  </section>
+
+  <!-- ══ 4 · هيكل وتصدير ══ -->
+  <section class="panel" data-panel="4" hidden>
+    <h2 class="stage-h">الهيكل والتصدير</h2>
+    <p class="stage-sub">ثمانية أجزاء بترتيب مقصود: القيم تسبق الوقائع، والوقائع تسبق الحلول، والحلول تسبق التكتيك.</p>
+    <div class="note">
+      <p><b>لماذا هذا الترتيب؟</b> أي مجموعة تبدأ من التكتيك تنتهي إلى أن تصير أداةً في يد من يملك التكتيك الأقوى.</p>
+    </div>
+    <div id="skeleton"></div>
+
+    <h3 class="sec">التصدير</h3>
+    <p class="muted" style="margin-bottom:12px">ملف Markdown واحد يجمع التهيئة والبراهين والسوابق والأدوات والهيكل.</p>
+    <div style="display:flex;gap:9px;flex-wrap:wrap">
+      <button class="btn btn-primary" id="btnCopyAll">نسخ الكل</button>
+      <button class="btn" id="btnDownload">تنزيل ‎.md</button>
+      <button class="btn" id="btnReset">تفريغ الحقول</button>
+    </div>
+    <div class="foot">
+      يُحفَظ عملك في متصفّحك وحده (<span class="num-cell">localStorage</span>) — لا يُرسَل إلى أي خادم،
+      ولا يصل إلى جهاز آخر. صدِّر ما يهمّك قبل تفريغ بيانات المتصفّح.
+    </div>
+  </section>
+
+  </main>
+</div>
+</div>
+
+<script>
+"use strict";
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const KEY = "misbar.ly.v1";
+const AR = n => n.toLocaleString("ar-EG");
+
+/* ═══════════ المحاور العامّة — تسري على أي ملف ليبي ═══════════ */
+const SPINE = [
+  {id:"power", t:"السيطرة الفعلية", why:"من يقبض في الموقع، لا من يحمل الصفة",
+   probe:[
+    "من يسيطر فعلياً على الموقع الجغرافي أو المرفق محلّ الملف — على مستوى الحيّ أو المنشأة، لا المدينة.",
+    "التمييز بين الجهة التي تحمل الصفة الرسمية والجهة التي تقبض فعلاً؛ وهل هما واحدة أم اثنتان.",
+    "هل تغيّرت السيطرة خلال ١٨ شهراً؟ اشتباك، تسليم، إعادة تموضع، اغتيال، قرار حلّ أو دمج.",
+    "الانقسامات داخل كل معسكر لا بينها فقط — أعنف ما يجري في ليبيا كثيراً ما يقع بين حلفاء اسميّين.",
+    "من يستطيع تعطيل الملف منفرداً؟ سمِّه، وسمِّ أداة التعطيل التي يملكها."]},
+
+  {id:"money", t:"المال: من يوقّع ومن يصرف", why:"أي ملف ليبي ينتهي عند النقد الأجنبي",
+   probe:[
+    "المسار الكامل للمال في هذا الملف: من الإيراد إلى المصرف المركزي إلى الصرف إلى المستفيد.",
+    "النقد الأجنبي: ما آلية التخصيص السارية اليوم، ومن يقرّرها، ومتى تغيّرت آخر مرة؟ تحقّق — لا تفترض.",
+    "الاعتمادات المستندية: هل يمرّ الملف بها؟ ما شروطها الحالية ومن يملك البتّ فيها؟",
+    "هل ثمة إنفاق على هذا الملف خارج الميزانية المعتمدة؟ ابحث عن الرقم ومصدره وتاريخه.",
+    "سعر الصرف: الرسمي والموازي، تاريخ كل رقم ومصدره. الفجوة بينهما مؤشّر بذاته.",
+    "من ينشر أرقام هذا الملف أصلاً — المصرف المركزي، ديوان المحاسبة، الجهة القطاعية؟ ومتى كان آخر نشر؟ التأخّر بذاته معلومة."]},
+
+  {id:"mandate", t:"المرجعيات المتنازعة", why:"بأي نصّ يُحتجّ، ومن يفسّره",
+   probe:[
+    "ما النصوص السارية على هذا الملف، ومن أصدرها؟ ابحث عن نصوص متعارضة صادرة عن جهتين.",
+    "هل تدّعي أكثر من جهة الاختصاص نفسه؟ وثِّق ادّعاء كل واحدة بنصّه وتاريخه.",
+    "القرارات القضائية ذات الصلة، وهل نُفِّذت فعلاً — التنفيذ في ليبيا سؤال منفصل عن الحكم.",
+    "هل صدر ما يغيّر الإطار خلال ١٢ شهراً: تعديل، قرار، اتفاق، مرسوم؟",
+    "من المستفيد من بقاء الاختصاص غامضاً؟ الغموض في ليبيا نادراً ما يكون سهواً."]},
+
+  {id:"external", t:"الفاعلون الخارجيون", why:"من يموّل ويضغط ويضمن، وماذا يريد",
+   probe:[
+    "أي أطراف خارجية لها مصلحة مباشرة في هذا الملف: دول، شركات، منظمات، مانحون؟",
+    "ما الذي لا يستطيع الداخل فعله بلا الخارج في هذا الملف تحديداً — تمويل، تقنية، اعتراف، أمن؟",
+    "أي تحوّل يكسر التصنيف النمطي السائد للتحالفات — ابحث عنه عمداً، لا تفترض ثبات الخرائط.",
+    "الالتزامات والعقود السارية وآجالها، ومن وقّعها وبأي صفة.",
+    "هل يفضّل الفاعل الخارجي هنا «الاستقرار» على «المؤسسات»؟ وما الذي يترتّب على ذلك في ملفّك؟"]}
+];
+
+/* ═══════════ المجالات ═══════════ */
+const GROUPS = [
+  {g:"الاقتصاد والأسواق", ds:[
+    {id:"fx", t:"النقد والمصارف وسعر الصرف", probe:[
+      "بنية القطاع المصرفي: المصرف المركزي، المصارف التجارية، حالة التوحيد المؤسسي بين الشرق والغرب — تحقّق من الحالة الراهنة لا من آخر ما قرأت.",
+      "أسعار الصرف: الرسمي والموازي، بتاريخ كل قراءة ومصدرها؛ وأي رسوم أو ضرائب مفروضة على النقد الأجنبي.",
+      "آلية تخصيص النقد الأجنبي للأفراد والشركات: الشروط، السقوف، من يوافق، وما الذي تغيّر مؤخراً.",
+      "الاعتمادات المستندية: حصّتها من استعمالات النقد الأجنبي، وآلية المنح، والمستفيدون منها.",
+      "مؤشرات الاحتياطي والسيولة والودائع، ومصدر كل رقم؛ وهل يُنشر بانتظام أم متقطّعاً.",
+      "الدفع الإلكتروني وانتشاره، وأزمات السيولة النقدية إن وُجدت."]},
+
+    {id:"oil", t:"النفط والغاز", probe:[
+      "الإنتاج والتصدير: الأرقام الحالية ومصدرها، والفرق بين الطاقة الاسمية والفعلية.",
+      "المؤسسة الوطنية للنفط: قيادتها، ميزانيتها التشغيلية، وعلاقتها بالحكومتين وبالمصرف المركزي.",
+      "الحقول والموانئ: من يؤمّنها فعلاً؟ حرس المنشآت النفطية جهة فاعلة بمطالب خاصة — افحص مطالبها الراهنة.",
+      "تاريخ الإغلاقات: من أغلق، ولماذا، وكم دام، وبأي مطلب انتهى. الإغلاق أداة تفاوض متكرّرة.",
+      "جولات التراخيص والعقود مع الشركات الأجنبية: ما أُسند فعلاً مقابل ما أُعلن.",
+      "مسار الإيراد النفطي: إلى أي حساب يذهب، ومن يوزّعه، وبأي قاعدة."]},
+
+    {id:"trade", t:"التجارة والاستيراد والتجزئة", probe:[
+      "اعتماد السلعة محلّ الملف على الاستيراد، ومن أين، وبأي قناة.",
+      "أثر تقنين النقد الأجنبي على القطاع: من يحصل على اعتماد ومن لا يحصل، وما البديل الذي يلجأ إليه.",
+      "السوق الموازية: حجمها التقديري ومصدر التقدير، ومن يحميها.",
+      "المنافذ الحدودية والجمارك: أيها عامل، ومن يديره فعلاً، وما رسومه المعلنة وغير المعلنة.",
+      "الأسعار: سلسلة زمنية إن وُجدت، ومصدرها؛ وأي مؤشر لسلّة إنفاق أسرية.",
+      "الدعم السلعي إن وُجد على هذه السلعة: آليته ومن يستفيد منه فعلاً."]},
+
+    {id:"build", t:"الإعمار والمقاولات والعقار", probe:[
+      "الجهات المكلّفة بالإعمار وتعدّدها — تعدّد الصناديق مؤشّر على تعدّد الولاءات لا على وفرة الموارد.",
+      "آلية التعاقد: مناقصة أم إسناد مباشر؟ وهل تُنشر العقود والمبالغ؟",
+      "مصدر تمويل المشاريع: ميزانية، صندوق، تمويل خارجي، مقايضة نفطية.",
+      "نسب الإنجاز المعلنة مقابل ما يمكن التحقّق منه ميدانياً أو بالصور الجوية.",
+      "الملكية العقارية: نزاعات الملكية وأثر النزوح والتهجير عليها، وحالة السجل العقاري.",
+      "من يحصل على العقود فعلاً، وما علاقته بمن يسيطر على المنطقة."]},
+
+    {id:"logi", t:"النقل واللوجستيات والموانئ", probe:[
+      "الموانئ والمطارات العاملة فعلاً، وطاقتها، ومن يؤمّنها ويديرها.",
+      "الطرق البرية الرئيسية: أيها سالك، وما نقاط التفتيش عليها، ومن يديرها وبأي رسوم.",
+      "كلفة الشحن الداخلي والخارجي واتجاهها، ومصدر الرقم.",
+      "التأمين البحري وأقساطه — مؤشّر خارجي صادق على تقدير المخاطر.",
+      "الممرات الجنوبية نحو الساحل الإفريقي ومن يتحكّم فيها.",
+      "الاعتماد على ممرّ أو ميناء واحد: أين نقطة الفشل الأحادية؟"]},
+
+    {id:"telecom", t:"الاتصالات والرقمنة", probe:[
+      "بنية القطاع: المشغّلون، الملكية، الجهة المنظِّمة، ودرجة التركّز.",
+      "التغطية وجودة الخدمة بالأرقام، وهل تختلف بين المناطق ولماذا.",
+      "انقطاعات الإنترنت: تكرارها وأسبابها المعلنة — عطل فني أم قرار.",
+      "حالة الرقمنة الحكومية: أي خدمة تُنجَز إلكترونياً فعلاً بلا وساطة؟",
+      "الأطر القانونية للفضاء الرقمي وأثرها على التعبير والنشاط.",
+      "البنية التحتية: الكابلات، مراكز البيانات، والاعتماد على مزوّد أجنبي واحد."]}
+  ]},
+
+  {g:"السياسة والحوكمة", ds:[
+    {id:"pol", t:"المسار السياسي والاتفاقات", probe:[
+      "الاتفاق أو المسار النافذ اليوم: نصّه الفعلي لا ملخّصه الصحفي؛ ابحث عن النصّ المنشور.",
+      "من وقّع ومن صادق ومن امتنع ومن رفض — بالاسم والصفة والتاريخ.",
+      "محطات التنفيذ ومواعيدها، وحالة كل محطة اليوم؛ والتأجيلات وأسبابها المنشورة إن وُجدت.",
+      "المسارات الموازية: هل ثمة أكثر من خارطة طريق حيّة في الوقت نفسه؟ وكيف تتعارض مواعيدها؟",
+      "من يملك تعطيل الاتفاق، وهل استعمل ذلك فعلاً.",
+      "هل يتضمّن الاتفاق ضمانات للخاسر — دوراً سياسياً، أمناً شخصياً، مساراً قانونياً معلوماً؟ غيابها هو الغياب الأخطر."]},
+
+    {id:"inst", t:"المؤسسات السيادية وتداخل الصلاحيات", probe:[
+      "الجهات السيادية ذات الصلة بالملف، وكيف يُعيَّن رؤساؤها، ومن يصادق على التعيين.",
+      "حالة كل جهة: موحّدة، منقسمة، متنازَع على رئاستها؟ تحقّق من الحالة الراهنة.",
+      "أي جهة تدّعي الاختصاص نفسه، وبأي سند.",
+      "التعيينات والإقالات خلال ١٢ شهراً، ومن أصدرها وبأي صفة.",
+      "أجهزة الرقابة: ديوان المحاسبة، هيئة الرقابة الإدارية — آخر تقرير منشور ومتى، وما تناوله.",
+      "هل وصلت المساءلة إلى القمة السياسية أو العسكرية في أي حالة موثّقة، أم توقّفت دونها؟"]},
+
+    {id:"local", t:"الحكم المحلي والبلديات", probe:[
+      "الاختصاصات التي يُسندها القانون ٥٩ لسنة ٢٠١٢ فعلاً — اقرأ النصّ، ولا تفترض أن البلدية تملك ما يُظنّ أنها تملكه.",
+      "ولاية التحصيل: هل تملك البلدية جباية أي إيراد؟ تحقّق.",
+      "التحويلات المركزية: هل ثمة صيغة منشورة، أم تخصيص تقديري؟",
+      "الانتخابات البلدية: أي جولات جرت، بأي إقبال، وأيها أُلغي أو عُلّق ولماذا — الإلغاء يتركّز جغرافياً.",
+      "أي بلدية تُذكر كنموذج قدرة، وهل ذلك بفضل إدارة مدنية أم ضبط أمني محلي؟ الفرق جوهري.",
+      "هل تنشر البلدية حسابها؟ وكم مضى على آخر نشر؟"]},
+
+    {id:"law", t:"القضاء والتشريع", probe:[
+      "بنية الجهاز القضائي وحالة قمّته — هل ثمة أكثر من جهة تدّعي المرجعية العليا؟",
+      "استقلال التعيين والتمويل، وأمن القضاة: أي حوادث موثّقة.",
+      "تنفيذ الأحكام: هل يُنفَّذ الحكم إذا خالف مصلحة حامل سلاح؟ ابحث عن حالات.",
+      "التشريعات السارية على الملف ومصدر كل واحدة، وأيها مطعون في مشروعيته.",
+      "السجون ومراكز الاحتجاز: من يديرها فعلاً، وهل تخضع للنيابة.",
+      "ملفات العدالة الانتقالية: المفقودون، المقابر، التعويض، وحالة كل مسار."]}
+  ]},
+
+  {g:"الخدمات والبنية التحتية", ds:[
+    {id:"power_e", t:"الكهرباء والطاقة", probe:[
+      "ساعات الانقطاع اليومية بالأرقام وبالمنطقة، ومصدر الرقم وتاريخه.",
+      "القدرة المركّبة مقابل القدرة العاملة مقابل الذروة — ثلاثة أرقام مختلفة تُخلط كثيراً.",
+      "أسباب العجز: صيانة، وقود، اعتداءات على الشبكة، ديون للمورّدين؟ رتّبها بالوزن.",
+      "المشاريع المعلنة: أي منها دخل الخدمة فعلاً، ومتى، مقابل ما أُعلن.",
+      "الطاقة الشمسية: المشاريع الجارية وحالتها الفعلية — ليبيا من أعلى دول العالم إشعاعاً، فلماذا التأخّر؟",
+      "الاستيراد من الجوار وحجمه الفعلي مقارنةً بالعجز.",
+      "الاحتجاجات المرتبطة بالخدمة: أين ومتى وما أثرها."]},
+
+    {id:"water", t:"المياه والصرف", probe:[
+      "مصادر الإمداد وحالتها التشغيلية، ونسبة الاعتماد على النهر الصناعي.",
+      "الاعتداءات على منظومة المياه وأثرها الموثّق.",
+      "ارتباط انقطاع المياه بانقطاع الكهرباء — الضخّ يحتاج طاقة، والأزمتان متلازمتان.",
+      "جودة المياه ونتائج أي فحوص منشورة.",
+      "الصرف الصحي ومعالجته، والتلوّث الساحلي إن وُجدت بيانات.",
+      "نسبة السكان ذوي الوصول الموثوق، ومصدر الرقم."]},
+
+    {id:"health", t:"الصحة", probe:[
+      "المرافق العاملة فعلياً مقابل المسجّلة، وبأي طاقة.",
+      "توفّر الأدوية الأساسية ونسبته، وآلية الشراء ومن يوردها.",
+      "العلاج بالخارج: حجم الإنفاق، آلية الإحالة، وأي تقارير رقابية عليه.",
+      "الكوادر: الأعداد، الهجرة، الاعتماد على كوادر وافدة.",
+      "التغطية بين المناطق: الفجوة بين الساحل والجنوب.",
+      "أي تقرير تدقيق على الإنفاق الصحي، وما تناوله."]},
+
+    {id:"edu", t:"التعليم", probe:[
+      "الالتحاق والتسرّب بالأرقام وبالمرحلة، ومصدر البيانات.",
+      "حالة المباني المدرسية، وأثر النزوح والنزاع عليها.",
+      "المعلمون: الأعداد، التأهيل، الأجور، والإضرابات إن وقعت.",
+      "المناهج: من يقرّها، وهل تختلف بين المناطق.",
+      "التعليم العالي: الجامعات، الاعتراف بالشهادات، والبحث العلمي.",
+      "نتائج تعلّم قابلة للقياس إن وُجدت — الالتحاق ليس تعلّماً."]}
+  ]},
+
+  {g:"الأمن والمجتمع", ds:[
+    {id:"sec", t:"الفاعلون المسلّحون واقتصاد الأمن", probe:[
+      "التشكيلات العاملة في نطاق الملف: أسماؤها، تبعيتها الاسمية، وقائدها.",
+      "من على كشوف الدولة: ابحث عن أي رقم لعدد المُدرَجين أمنياً وعسكرياً — وتوقّع ألّا تجد رقماً موحّداً.",
+      "مواقع الإيراد التي تسيطر عليها تشكيلات: منافذ، موانئ، مطارات، حقول، مصارف.",
+      "الاشتباكات خلال ١٨ شهراً: من ضد من، وعلامَ، وكيف انتهت.",
+      "برامج الدمج والتسريح: ما أُعلن، وما نُفِّذ فعلاً، وكيف يُتحقَّق من الهوية.",
+      "اقتصاد التهريب في نطاق الملف: وقود، بشر، سلع، ومن يحميه."]},
+
+    {id:"civic", t:"المجال المدني والإعلام", probe:[
+      "الإطار القانوني الناظم للجمعيات فعلياً — أي قانون هو النافذ اليوم، وما شروطه؟ تحقّق من النصّ.",
+      "صلاحيات الجهة المرخِّصة: هل تملك التفتيش والتجميد والحلّ بلا أمر قضائي؟",
+      "شروط التمويل والتواصل مع جهات أجنبية.",
+      "سجل الاعتقال والتضييق خلال ٢٤ شهراً — من كل الأطراف، لا من طرف واحد.",
+      "الإعلام: المنابر العاملة، ملكيتها، وتصنيف ليبيا في مؤشرات حرية الصحافة.",
+      "ما يعمل رغم القيود: مبادرات موثّقة بنتائج، لا بنوايا."]},
+
+    {id:"disp", t:"النزوح والهجرة", probe:[
+      "أعداد النازحين داخلياً واتجاهها، ومصدر البيانات ومنهجها.",
+      "ملفات العودة المعلّقة: أي مناطق، وما الذي يعطّل العودة.",
+      "المهاجرون واللاجئون على الأرض: العدد، الجنسيات، أوضاع الاحتجاز.",
+      "التعاون الأوروبي في ملف الهجرة: آلياته والانتقادات الحقوقية الموثّقة له.",
+      "اقتصاد التهريب البشري ومن يديره.",
+      "أثر الملف على المجتمعات المضيفة: خدمات، أسعار، سوق عمل."]},
+
+    {id:"labor", t:"سوق العمل والشباب", probe:[
+      "البطالة عموماً وبين الشباب، ومصدر الرقم — وهل هو مسح ميداني أم تقدير نمذجي؟ الفرق كبير.",
+      "حجم التوظيف العام وحصّته من العمالة، وأي رقم لعدد الموظفين على كشوف الدولة.",
+      "ازدواج الكشوف والأسماء الوهمية: أي جهد لتنقيتها، وأي رقم نتج عنه.",
+      "القطاع الخاص: حجمه، عوائقه، وأثر النقد الأجنبي عليه.",
+      "الاقتصاد غير الرسمي: التقديرات ومصادرها، وكم أسرة تعتمد عليه.",
+      "الهجرة الخارجية للكفاءات الشابة وأي بيانات عليها.",
+      "آخر تعداد سكاني معتمد ومتى — كل رقم ديموغرافي مبني عليه."]}
+  ]}
+];
+
+/* ═══════════ مكتبة السوابق ═══════════ */
+const CASES = [
+  {t:"العراق", tag:"ريع نفطي + انقسام مؤسسي + فصائل مسلّحة على كشوف الدولة",
+   look:"دمج الفصائل في الهيكل الرسمي وما جرى بعده؛ آليات الدفع وسيطرة القادة على القوائم؛ نزاع المركز والإقليم على التحويلات المالية.",
+   trap:"الافتراض بأن تحويل الراتب إلى الفرد بدل القائد يكسر الولاء — ابحث عن الدليل قبل أن تبني عليه."},
+  {t:"لبنان", tag:"انهيار نقدي وتعدّد أسعار صرف ومصرف مركزي تحت ضغط سياسي",
+   look:"تسلسل تعدّد الأسعار وكيف نشأ؛ دور المصارف التجارية؛ من تحمّل كلفة التصحيح: المودع أم الخزينة أم العملة.",
+   trap:"سرعة الانهيار تُقرأ رجعياً كأنها كانت متوقَّعة؛ ابحث عمّا كان معلوماً وقتها لا بعدها."},
+  {t:"الجزائر", tag:"اقتصاد ريعي، دعم محروقات واسع، إصلاح مؤجّل",
+   look:"محاولات ترشيد الدعم وما أوقفها؛ سوق الصرف الموازية وعلاقتها بالاستيراد؛ التوظيف العام كأداة استقرار.",
+   trap:"التشابه الريعي يغري بالقياس المباشر رغم اختلاف جذري في تماسك الدولة."},
+  {t:"نيجيريا", tag:"صيغة توزيع نفطي، تهريب وقود، تنقية كشوف رواتب",
+   look:"صيغة الاشتقاق للمناطق المنتجة وأثرها على المعيشة؛ التدقيق البيومتري وما كشفه وهل دام؛ إلغاء دعم الوقود وردّ الفعل.",
+   trap:"أرقام التوفير من تنقية الكشوف تُعلن مرة ونادراً ما تُتابَع؛ ابحث عن المتابعة لا الإعلان."},
+  {t:"فنزويلا", tag:"انهيار عملة وتسعير متعدّد وتآكل قطاع نفطي",
+   look:"كيف تآكل الإنتاج النفطي رغم الاحتياطي؛ أثر تعدّد الأسعار على من؛ الرقابة على الأسعار ونتائجها.",
+   trap:"الحالة متطرّفة بما يجعلها حجّةً سهلة لكل موقف؛ استعملها لآلية بعينها لا كنذير عام."},
+  {t:"أنغولا", tag:"إعمار ما بعد حرب أهلية بعقود نفطية موجَّهة",
+   look:"نموذج مقايضة النفط بالبنية التحتية وشروطه؛ من حصل على العقود ولماذا؛ ما الذي بقي عاملاً بعد عقد.",
+   trap:"سرعة الإعمار المرئي تُخفي كلفة الدين والالتزامات طويلة الأجل."},
+  {t:"إندونيسيا", tag:"إصلاح دعم الوقود مع تحويل نقدي، ولامركزية بعد ١٩٩٩",
+   look:"تسلسل التعويض النقدي مقابل رفع السعر؛ آلية الاستهداف والوصول؛ ما الذي حدث للإيرادات الإقليمية بعد التفويض.",
+   trap:"يُروى كنجاح كامل؛ ابحث عن الجولات التي تراجعت فيها الحكومة وعن أثر اللامركزية على الفساد المحلي."},
+  {t:"اليمن والسودان", tag:"انقسام مصرف مركزي وتعدّد سلطات نقدية",
+   look:"كيف انقسم المصرف عملياً؛ ما الذي حدث للعملة في كل نطاق؛ آليات دفع الرواتب عبر خط الانقسام.",
+   trap:"الأقرب بنيوياً إلى ليبيا في ملف النقد، والأقلّ تغطيةً بحثياً — توقّع شحّ المصادر."},
+  {t:"البوسنة والهرسك", tag:"اتفاق تقاسم سلطة أنهى الحرب وأنتج جموداً مؤسسياً",
+   look:"كيف تحوّلت ضمانات ما بعد الحرب إلى حقّ نقض دائم؛ كلفة الجمود على الخدمات؛ محاولات التعديل ولماذا فشلت.",
+   trap:"الحالة الأهم لاختبار «ضمانات الخاسر»: تُظهر ثمن الضمانات حين تُصاغ بلا أجل."},
+  {t:"إقليم كردستان العراق", tag:"تحويلات مركزية تُستعمل ورقة ضغط سياسي",
+   look:"تاريخ نزاع الحصة والتحويلات؛ أثر التأخير على الرواتب المحلية؛ كيف غذّى ذلك المطالب الانفصالية بدل احتوائها.",
+   trap:"يُستشهد به لصالح اللامركزية وضدّها معاً؛ اقرأ الآلية لا الخلاصة."},
+  {t:"تونس والأردن ومصر", tag:"إصلاحات دعم وتقشّف تحت ضغط خارجي",
+   look:"ما الذي أثار احتجاجاً وما الذي مرّ؛ دور التعويض النقدي وتوقيته؛ أثر الشرح العام على القبول.",
+   trap:"وجود تعويض لا يكفي؛ ابحث عن التوقيت والمصداقية لا عن وجود البرنامج."}
+];
+
+const ALLD = GROUPS.flatMap(g=>g.ds);
+const domById = id => ALLD.find(d=>d.id===id);
+
+/* ───────── حالة ───────── */
+const blank = () => ({
+  topic:"", domains:[], horizon:"", audience:"",
+  asOf:new Date().toLocaleDateString("ar-EG",{year:"numeric",month:"long",day:"numeric"}),
+  premises:"", six:{}, theme:null,
+  tMandate:[], tIndic:[], tScen:[], tFals:[], tGaps:[], tCorr:[]
+});
+let S = blank();
+function load(){ try{ const r=localStorage.getItem(KEY); if(r) S=Object.assign(blank(),JSON.parse(r)); }catch(e){} }
+let saveTimer;
+function save(){ clearTimeout(saveTimer); saveTimer=setTimeout(()=>{ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} },200); }
+
+function ctx(){
+  return {
+    topic:S.topic.trim() || "«لم يُحدَّد الموضوع بعد»",
+    horizon:S.horizon.trim() || "غير محدّد",
+    audience:S.audience.trim() || "غير محدّد",
+    asOf:S.asOf.trim() || "غير محدّد",
+    doms:S.domains.map(id=>domById(id)).filter(Boolean)
+  };
+}
+const HEADER = () => {
+  const c = ctx();
+  const dl = c.doms.length ? c.doms.map(d=>d.t).join("، ") : "لم تُحدَّد مجالات بعد";
+  return `الموضوع: ${c.topic}
+السياق: ليبيا
+المجالات: ${dl}
+حدّ المعرفة: ${c.asOf}. كل ما بعد هذا التاريخ يلزم التحقّق منه قبل البناء عليه.
+الأفق: ${c.horizon}
+المستعمِل: ${c.audience}`;
+};
+const RULES = `قواعد مُلزِمة:
+١. وسم كل ادّعاء بدرجته: [مؤكَّد] [مُرجَّح] [تقدير] [مجهول].
+٢. لا تملأ فجوة بالتخمين. سجّلها في قسمها.
+٣. كل رقم في جدول: المؤشر | القيمة | التاريخ | المصدر | ملاحظة موثوقية.
+٤. إن استند ادّعاء إلى مصدر واحد، قل ذلك صراحةً في موضعه.
+٥. لا مصدر محايد في الملف الليبي. صنّف مصادرك بزاويتها، ورجّح ما أقرّه طرفان متخاصمان أو جهة فنية.
+٦. إن تعذّر الوصول إلى نصّ كامل واعتمدتَ على مقتطف بحث، قل ذلك.
+٧. ابحث بالعربية والإنجليزية معاً. كثير من التفاصيل لا يظهر إلا في الإعلام المحلي.
+
+بنية الإخراج (بهذه العناوين، بلا مقدّمة، ~١٢٠٠ كلمة):
+— «الأرقام»: جدول بكل رقم صلب عثرتَ عليه.
+— «الوقائع المؤكدة»: بالتاريخ والرابط.
+— «التقديرات والمتنازع عليه».
+— «ما تعذّر التحقق منه»: الفجوات صراحةً، وما يلزم لسدّها.
+— «ما يناقض السردية الشائعة»: ابحث عن هذا عمداً. إن لم تجد، قل إنك لم تجد.`;
+
+function briefText(item){
+  const scope = item.probe.map((p,i)=>`${AR(i+1)}. ${p}`).join("\n");
+  return `بحث على محور «${item.t}»\n\n${HEADER()}\n\nاستعمل بحث الويب بكثافة (١٠ عمليات فأكثر). لا تكتب أي ملف.\n\nالنطاق:\n${scope}\n\n${RULES}`;
+}
+function compText(){
+  const c = ctx();
+  const dl = c.doms.length ? c.doms.map(d=>d.t).join("، ") : "المجالات المحدّدة";
+  const list = CASES.map(x=>`— ${x.t}: ${x.tag}`).join("\n");
+  return `بحث على محور «السوابق المقارنة»
+
+${HEADER()}
+
+المهمّة: لكل حلّ أو ترتيب مقترح في هذا الملف، ابحث عمّا جرى حين جُرِّب في مكان آخر.
+هذا المحور هو الذي يكسر افتراضات التصميم — لا تعامله كزينة.
+
+حالات مرشّحة للقياس (اختر منها ما يناسب ${dl}، وأضف غيرها):
+${list}
+
+النطاق:
+١. لكل مقترح: أين جُرِّب، ومتى، وما الذي حدث فعلاً؟
+٢. أنماط الفشل أولاً — لا نماذج النجاح. أين انهار، ولماذا تحديداً؟
+٣. شروط النجاح: ما الذي كان متوفّراً حيث نجح وغائباً حيث فشل؟ وهل هو متوفّر في ليبيا؟
+٤. الآليات المفترضة: هل ثمة دليل كمّي يسندها، أم هي حجّة نظرية معقولة فقط؟
+٥. وجه الاختلاف عن ليبيا: ما الذي يجعل القياس ضعيفاً في كل حالة؟ قُله صراحةً.
+٦. احذر انحياز الناجي: الحالات المنشورة هي التي نجحت أو انهارت انهياراً مدوّياً.
+
+${RULES}
+
+وأضف قسماً أخيراً: «ما يعنيه هذا لليبيا» — نقاط محدّدة، كل واحدة إمّا تحذير تصميمي
+أو إقرار بأن مقترحاً شائعاً سنده التجريبي ضعيف.`;
+}
+const SYNTH = () => `تركيب نتائج المسح — ${ctx().topic}
+
+${HEADER()}
+
+بين يديك تقارير على محاور متعدّدة تشمل: السيطرة الفعلية، المال، المرجعيات المتنازعة،
+الفاعلون الخارجيون، والمجالات القطاعية المحدّدة، والسوابق المقارنة.
+
+أخرِج، بهذا الترتيب وبلا مقدّمة:
+
+١. «ما صمد» — الأطروحات التي تدعمها التقارير، وما الذي قوّاها تحديداً.
+٢. «ما انكسر» — نوعان:
+   (أ) أخطاء وقائعية: ما قيل مقابل الصحيح، في جدول.
+   (ب) أخطاء تصميمية: مقترحات بُنيت على افتراضات لم تصمد. هذه أخطر، فأفرِد لها مساحة.
+   لكل واحد: الآلية المفترضة، وماذا تقول الأدلة، والصياغة المصحَّحة.
+٣. «الصورة المعدَّلة» — ما تغيّر في فهم الملف ككل لا في تفاصيله.
+٤. «الترجيحات» — السيناريوهات قبل وبعد، مع سبب كل تعديل.
+٥. «قائمة التعديلات» — جدول: الجزء | التعديل المطلوب.
+٦. «ما بقي مجهولاً» — بعد كل هذا البحث.
+٧. «تحفّظ منهجي» — حدود المسح نفسه، وأي الأرقام تحتاج تثبيتاً من مصدر أوّلي قبل النشر.
+
+قواعد: احتفظ بأوسمة الثقة. لا تُرضِ التحليل السابق — إن ناقضته التقارير فقُل ذلك بوضوح.
+وميّز بين «لم نجد دليلاً» و«وجدنا دليلاً على النفي».`;
+
+const FIXER = () => `سجل التصحيحات — ${ctx().topic}
+
+اكتب سجلاً يُطبّق القاعدة: لا يُحذف نصّ خاطئ، بل يُشطب ويُبقى مع سببه.
+
+بهذه الأقسام:
+أولاً — أخطاء وقائعية: جدول (ما قيل | الصحيح | الموضع).
+ثانياً — أخطاء تصميمية: لكل واحد — ما قيل، وماذا تقول الأدلة، والصياغة المصحَّحة.
+ثالثاً — ما صمد، ولماذا.
+رابعاً — ما تغيّر في الترجيحات، في جدول قبل/بعد مع سبب كل تعديل.
+خامساً — فجوات أُغلقت أو تأكّدت.
+سادساً — ما بقي مجهولاً.
+سابعاً — تحفّظ منهجي على المسح نفسه، وأي الأرقام تحتاج تثبيتاً قبل النشر.
+
+اكتبه بصيغة المتكلّم، بلا اعتذار ولا إسهاب في جلد الذات: الخطأ يُذكر، ويُصحَّح، ويُمضى.`;
+
+function allBriefs(){
+  const out = SPINE.map((d,i)=>({n:AR(i+1), t:d.t, why:d.why, body:briefText(d), kind:"spine"}));
+  ctx().doms.forEach((d,i)=>out.push({n:AR(SPINE.length+i+1), t:d.t, why:"مجال مختار", body:briefText(d), kind:"domain"}));
+  out.push({n:"س", t:"السوابق المقارنة", why:"ما جرى حين جُرِّب في مكان آخر", body:compText(), kind:"comp"});
+  out.push({n:"ت", t:"أمر التركيب", why:"بعد اكتمال المحاور", body:SYNTH(), kind:"meta"});
+  out.push({n:"ص", t:"أمر سجل التصحيحات", why:"بعد التركيب، على مسودّتك الأولى", body:FIXER(), kind:"meta"});
+  return out;
+}
+
+/* ───────── الأسئلة الستة ───────── */
+const SIX = [
+  ["من يملك نقضه؟","هل يستطيع طرف واحد تعطيله منفرداً؟ الترتيب الذي يملك أحدهم تعطيله هو رهينة بيده."],
+  ["ما مصير الخاسر؟","هل يخسر الخاسر موقعه فقط، أم حريته وماله وأمنه؟ إن كانت الخسارة وجودية فلن يقبل أحد أن يخسر."],
+  ["من يُحاسِب المنتصر؟","هل ثمة جهة تستطيع عزله وهو في موقعه؟ بلا هذه، الترتيب يُنتج مستبدّاً جديداً بعد فترة سماح."],
+  ["من غاب عن الطاولة؟","من المتأثّر الذي لم يُمثَّل؟ الغائب اليوم هو المفجّر غداً."],
+  ["هل يعمل بعد عشر سنين؟","لو تغيّر الأشخاص والرعاة، أيبقى قائماً؟ الترتيب المفصّل على أشخاص يموت بموتهم."],
+  ["هل يُنتج اتفاقاً بلا مساءلة؟","هل يمرّ بتوزيع المواقع أو المسؤوليات دون أن يملك أحدٌ الرقم؟ هذا ترتيب يفشل لأنه نجح."]
+];
+
+const COLS = {
+  tMandate:[{k:"fn",p:"الوظيفة"},{k:"claim",p:"من يدّعيها"},{k:"real",p:"من يمارسها"},{k:"flaw",p:"العطب"}],
+  tIndic:[{k:"name",p:"المؤشر"},{k:"g",p:"أخضر",mono:1},{k:"y",p:"أصفر",mono:1},{k:"r",p:"أحمر",mono:1},
+          {k:"val",p:"القيمة",mono:1},{k:"state",sel:["—","أخضر","أصفر","أحمر"]}],
+  tScen:[{k:"name",p:"السيناريو"},{k:"w",p:"٪",mono:1},{k:"signs",p:"علامات مبكّرة"},{k:"act",p:"ماذا تفعل"}],
+  tFals:[{k:"if",p:"لو حدث…"},{k:"then",p:"…لكان خطؤنا"}],
+  tGaps:[{k:"gap",p:"الفجوة"},{k:"why",p:"لماذا تهمّ"},{k:"how",p:"كيف تُسدّ"}],
+  tCorr:[{k:"was",p:"ما قيل"},{k:"is",p:"الصحيح"},{k:"where",p:"الموضع"},
+         {k:"kind",sel:["—","وقائعي","تصميمي","ترجيح","فجوة"]}]
+};
+const SEED = {tMandate:[{},{},{}], tIndic:[{},{},{}], tScen:[{},{},{}], tFals:[{},{}], tGaps:[{},{},{}], tCorr:[{}]};
+
+const PARTS = [
+  ["٠","المنهج ودرجات الثقة","سلّم الثقة، حدود الوثيقة بصراحة، الفجوات المفتوحة، بروتوكول التحديث ودوريته."],
+  ["١","الأساس القيمي","لماذا تفشل الحلول التقنية؛ القيم الحاكمة ومحكّ عملي لكل منها؛ الاختبار السداسي؛ أخلاقيات الجهة التي تحلّل."],
+  ["٢","تقييم الموقف","خريطة الفاعلين؛ مصفوفة تداخل الصلاحيات؛ مسار المال؛ الفاعلون الخارجيون؛ محرّكات بقاء الأزمة."],
+  ["٣","نظام العمل","المبادئ التصميمية، والمسارات المترابطة، ومنطق التسلسل: ما الذي يجب أن يسبق ماذا، ولماذا."],
+  ["٤","الخطوات العملية","ما يستطيع المستعمِل فعله فعلاً بموارده الحقيقية — لا بموارد يتمنّاها. ويبدأ بالأسبوع الأول."],
+  ["٥","المؤشرات والسيناريوهات","لوحة العتبات، والسيناريوهات بترجيحاتها، وجدول التكذيب، وعلامات الإنذار."],
+  ["٦","المصادر","مصنّفة بزاوية كل فئة، مع قائمة صريحة بما تعذّر التحقّق منه."],
+  ["٧","سجل التصحيحات","ما أخطأتَ فيه وما صمد وما بقي مجهولاً. أثمن ما تنتجه، وأصعبه على النفس."]
+];
+
+/* ───────── بناء الواجهة ───────── */
+function buildDomains(){
+  const host = $("#domains"); host.innerHTML = "";
+  GROUPS.forEach(g=>{
+    const w = document.createElement("div"); w.className="dom-group";
+    const h = document.createElement("h5"); h.textContent = g.g; w.appendChild(h);
+    const c = document.createElement("div"); c.className="dom-chips";
+    g.ds.forEach(d=>{
+      const l = document.createElement("label");
+      const i = document.createElement("input");
+      i.type="checkbox"; i.value=d.id; i.checked = S.domains.includes(d.id);
+      i.addEventListener("change",()=>{
+        if(i.checked){ if(!S.domains.includes(d.id)) S.domains.push(d.id); }
+        else S.domains = S.domains.filter(x=>x!==d.id);
+        save(); buildBriefs();
+      });
+      l.appendChild(i); l.appendChild(document.createTextNode(d.t)); c.appendChild(l);
+    });
+    w.appendChild(c); host.appendChild(w);
+  });
+}
+
+function buildBriefs(){
+  const host = $("#briefs"); host.innerHTML = "";
+  allBriefs().forEach((it,idx)=>{
+    const el = document.createElement("div");
+    el.className="brief"; el.dataset.open = idx===0 ? "1" : "0";
+    el.innerHTML =
+      '<div class="brief-head" role="button" tabindex="0" aria-expanded="'+(idx===0)+'">' +
+        '<span class="num"></span><h4><span class="t"></span><span class="why"></span></h4>' +
+        '<span class="chev">▼</span></div>' +
+      '<div class="brief-body"'+(idx===0?"":" hidden")+'>' +
+        '<pre class="prompt"></pre>' +
+        '<div class="brief-actions"><button class="btn btn-sm copy">نسخ البرهان</button></div></div>';
+    $(".num",el).textContent = it.n;
+    $(".t",el).textContent = it.t;
+    $(".why",el).textContent = it.why;
+    $("pre",el).textContent = it.body;
+    const head=$(".brief-head",el), body=$(".brief-body",el);
+    const toggle=()=>{ const o = el.dataset.open==="1"; el.dataset.open = o?"0":"1";
+      body.hidden = o; head.setAttribute("aria-expanded", String(!o)); };
+    head.addEventListener("click",toggle);
+    head.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); }});
+    $(".copy",el).addEventListener("click",e=>{ e.stopPropagation(); copy(it.body,"نُسخ البرهان"); });
+    host.appendChild(el);
+  });
+}
+
+function buildCases(){
+  const host = $("#cases"); host.innerHTML = "";
+  CASES.forEach(c=>{
+    const el = document.createElement("div"); el.className="case";
+    el.innerHTML = '<h4></h4><span class="tagline"></span>' +
+      '<dl><dt>ابحث عن</dt><dd class="look"></dd><dt>المصيدة</dt><dd class="trap"></dd></dl>';
+    $("h4",el).textContent = c.t;
+    $(".tagline",el).textContent = c.tag;
+    $(".look",el).textContent = c.look;
+    $(".trap",el).textContent = c.trap;
+    host.appendChild(el);
+  });
+}
+
+function buildSix(){
+  const host = $("#sixTest"); host.innerHTML = "";
+  SIX.forEach((q,i)=>{
+    const d = document.createElement("div"); d.className="q";
+    d.innerHTML = '<div class="q-txt"><b></b><span></span></div>' +
+      '<div class="q-opts">'+opt(i,"ok","✓")+opt(i,"mid","~")+opt(i,"bad","✕")+'</div>';
+    $("b",d).textContent = AR(i+1)+". "+q[0];
+    $(".q-txt span",d).textContent = q[1];
+    host.appendChild(d);
+  });
+  function opt(i,v,g){
+    return '<label class="v-'+v+'"><input type="radio" name="q'+i+'" value="'+v+'"'+
+           (S.six[i]===v?" checked":"")+'><span>'+g+'</span></label>';
+  }
+  $$("input[type=radio]",host).forEach(r=>r.addEventListener("change",e=>{
+    S.six[e.target.name.slice(1)] = e.target.value; save(); scoreSix();
+  }));
+  scoreSix();
+}
+function scoreSix(){
+  const v = $("#verdict");
+  const vals = SIX.map((_,i)=>S.six[i]);
+  const done = vals.filter(Boolean).length;
+  if(done<6){ v.className="verdict";
+    v.innerHTML='<b>لم يكتمل التقييم</b><span class="muted">أُجيب عن '+AR(done)+' من ٦.</span>'; return; }
+  const bad = vals.filter(x=>x==="bad").length, mid = vals.filter(x=>x==="mid").length;
+  if(bad>=3){ v.className="verdict bad";
+    v.innerHTML='<b>'+AR(bad)+' إجابات سلبية — الترتيب يُنتج أزمة جديدة</b><span>مهما بدا واعداً، وأياً كان الغطاء الذي يحظى به. عالِج المواضع السلبية قبل أي تأييد.</span>'; }
+  else if(bad>=1||mid>=3){ v.className="verdict mid";
+    v.innerHTML='<b>ثغرات محدّدة — مراقبة مشروطة</b><span>لا تأييد ولا معارضة. انشر معاييرك الآن، ثم انشر الحكم عند كل محطة بالدرجات لا بالأحكام.</span>'; }
+  else { v.className="verdict good";
+    v.innerHTML='<b>يجتاز الاختبار</b><span>أعد التطبيق عند كل تغيّر جوهري — الاجتياز اليوم لا يضمن الاجتياز بعد ستة أشهر.</span>'; }
+}
+
+function buildTable(id){
+  const tb = $("#"+id+" tbody"); tb.innerHTML="";
+  if(!S[id].length) S[id] = JSON.parse(JSON.stringify(SEED[id]||[{}]));
+  S[id].forEach(row=>tb.appendChild(mkRow(id,row)));
+  if(id==="tScen") sumScen();
+}
+function mkRow(id,row){
+  const tr = document.createElement("tr");
+  COLS[id].forEach(c=>{
+    const td = document.createElement("td");
+    if(c.sel){
+      const s = document.createElement("select");
+      c.sel.forEach(o=>{ const op=document.createElement("option"); op.value=o==="—"?"":o; op.textContent=o; s.appendChild(op); });
+      s.value = row[c.k]||"";
+      s.addEventListener("change",()=>{ row[c.k]=s.value; save(); if(id==="tIndic") paint(td,s.value); });
+      td.appendChild(s); if(id==="tIndic") paint(td,s.value);
+    } else {
+      const inp = document.createElement("input");
+      inp.type="text"; inp.placeholder=c.p||""; inp.value=row[c.k]||"";
+      if(c.mono) inp.className="num-cell";
+      inp.addEventListener("input",()=>{ row[c.k]=inp.value; save(); if(id==="tScen") sumScen(); });
+      td.appendChild(inp);
+    }
+    tr.appendChild(td);
+  });
+  const tdx = document.createElement("td");
+  const del = document.createElement("button");
+  del.className="row-del"; del.type="button"; del.title="حذف الصفّ"; del.textContent="×";
+  del.addEventListener("click",()=>{ S[id].splice(S[id].indexOf(row),1); save(); buildTable(id); });
+  tdx.appendChild(del); tr.appendChild(tdx);
+  return tr;
+}
+function paint(td,val){
+  const t = val==="أخضر"?"--ok-bg":val==="أصفر"?"--warn-bg":val==="أحمر"?"--crit-bg":"";
+  td.style.background = t ? getComputedStyle(document.documentElement).getPropertyValue(t).trim() : "";
+}
+function sumScen(){
+  const n = S.tScen.reduce((a,r)=>a+(parseFloat(String(r.w||"").replace(/[^\d.]/g,""))||0),0);
+  const el = $("#scenSum");
+  el.textContent = AR(Math.round(n*10)/10);
+  el.className = "num-cell " + (Math.abs(n-100)<=1 ? "sum-ok" : (n>0?"sum-bad":""));
+  el.title = Math.abs(n-100)<=1 ? "" : "المجموع لا يساوي ١٠٠٪";
+}
+function buildSkeleton(){
+  $("#skeleton").innerHTML = PARTS.map(p=>
+    '<div class="skel"><b><span class="k">'+p[0]+'</span>'+p[1]+'</b><p>'+p[2]+'</p></div>').join("");
+}
+
+/* ───────── تصدير ───────── */
+function mdTable(id,heads){
+  const rows = S[id].filter(r=>Object.values(r).some(v=>String(v||"").trim()));
+  if(!rows.length) return "_(فارغ)_\n";
+  const keys = COLS[id].map(c=>c.k);
+  let out = "| "+heads.join(" | ")+" |\n|"+heads.map(()=>"---").join("|")+"|\n";
+  rows.forEach(r=>{ out += "| "+keys.map(k=>String(r[k]||"—").replace(/\|/g,"\\|")).join(" | ")+" |\n"; });
+  return out;
+}
+function buildMd(){
+  const c = ctx();
+  const dl = c.doms.length ? c.doms.map(d=>"- "+d.t).join("\n") : "_(لم تُحدَّد)_";
+  const prem = S.premises.trim()
+    ? S.premises.trim().split("\n").map(l=>"- "+l.trim()).filter(l=>l!=="- ").join("\n") : "_(لم تُحدَّد)_";
+  const sixTxt = SIX.map((q,i)=>{
+    const m={ok:"✓ إيجابي",mid:"~ جزئي",bad:"✕ سلبي"};
+    return "| "+AR(i+1)+". "+q[0]+" | "+(m[S.six[i]]||"لم يُجَب")+" |";
+  }).join("\n");
+
+  let md = `# تقييم موقف: ${c.topic}
+
+| | |
+|---|---|
+| السياق | ليبيا |
+| الأفق الزمني | ${c.horizon} |
+| المستعمِل | ${c.audience} |
+| حدّ المعرفة | ${c.asOf} |
+
+## المجالات
+${dl}
+
+> كل ادّعاء في هذه الوثيقة موسوم بدرجة ثقته. الفجوات المعرفية مُعلنة لا مملوءة بالتخمين.
+> ولا يُبنى قرار على ادّعاء أقلّ من [مُرجَّح] ما لم يكن قابلاً للتراجع بتكلفة منخفضة.
+
+## الفرضيات الحاكمة
+${prem}
+
+## سلّم الثقة
+
+| الوسم | المعنى | كيف تتعامل معه |
+|---|---|---|
+| [مؤكَّد] | مصدر أوّلي أو مصدران مستقلّان | ابنِ عليه |
+| [مُرجَّح] | أدلة غير مكتملة أو مصدر واحد جيّد | ابنِ بحذر، وضع خطة بديلة |
+| [تقدير] | استنتاج تحليلي | فرضية عمل لا أساس قرار |
+| [قيمة] | موقف معياري | يُناقَش بالحجّة لا بالأرقام |
+| [مجهول] | فجوة معلومة | لا تُملأ بالتخمين؛ تُسجَّل كمهمّة بحث |
+
+---
+
+# أولاً · براهين البحث
+
+`;
+  allBriefs().forEach(b=>{ md += `## ${b.n}. ${b.t}\n_${b.why}_\n\n\`\`\`\n${b.body}\n\`\`\`\n\n`; });
+
+  md += `---\n\n# ثانياً · مكتبة السوابق\n\nحالات تشبه ليبيا في آلية بعينها لا في كل شيء. لا تُذكر النتائج — بل ما الذي تذهب لتقرأه.\n\n`;
+  CASES.forEach(x=>{ md += `### ${x.t}\n**وجه الشبه:** ${x.tag}\n\n**ابحث عن:** ${x.look}\n\n**المصيدة:** ${x.trap}\n\n`; });
+
+  md += `---\n\n# ثالثاً · الأدوات\n\n## ١ · الاختبار السداسي\n\n| السؤال | التقدير |\n|---|---|\n${sixTxt}\n\n`;
+  md += `**القاعدة:** ثلاث إجابات سلبية فأكثر = الترتيب يُنتج أزمة جديدة مهما بدا واعداً.\n\n`;
+  md += `## ٢ · مصفوفة تداخل الصلاحيات\n\n${mdTable("tMandate",["الوظيفة","مَن يدّعيها","مَن يمارسها فعلاً","العطب"])}\n`;
+  md += `## ٣ · لوحة العتبات\n\n${mdTable("tIndic",["المؤشر","أخضر","أصفر","أحمر","القيمة الحالية","الحالة"])}\n`;
+  md += `## ٤ · السيناريوهات\n\n${mdTable("tScen",["السيناريو","الترجيح ٪","علامات مبكّرة","ماذا تفعل"])}\n`;
+  md += `## ٥ · جدول التكذيب\n\n${mdTable("tFals",["لو حدث هذا…","…لكان خطؤنا هنا"])}\n`;
+  md += `## ٦ · الفجوات المعرفية\n\n${mdTable("tGaps",["الفجوة","لماذا تهمّ","كيف تُسدّ"])}\n`;
+  md += `## ٧ · سجل التصحيحات\n\n${mdTable("tCorr",["ما قيل","الصحيح","الموضع","نوع الخطأ"])}\n`;
+  md += `\n---\n\n# رابعاً · هيكل الوثيقة\n\nالقيم تسبق الوقائع، والوقائع تسبق الحلول، والحلول تسبق التكتيك.\n\n`;
+  PARTS.forEach(p=>{ md += `### ${p[0]} — ${p[1]}\n${p[2]}\n\n`; });
+  md += `---\n\n_وُلِّد بـ«مِسبار ليبيا». الأداة لا تدّعي واقعة؛ كل رقم أعلاه من بحث المستعمِل ومسؤوليته._\n`;
+  return md;
+}
+
+/* ───────── مساعدات ───────── */
+let toastT;
+function toast(msg){
+  clearTimeout(toastT);
+  let t = $(".toast");
+  if(!t){ t=document.createElement("div"); t.className="toast"; document.body.appendChild(t); }
+  t.textContent = msg; toastT = setTimeout(()=>t.remove(),1900);
+}
+function copy(text,msg){
+  const done = ()=>toast(msg||"نُسخ");
+  const fallback = ()=>{
+    const ta=document.createElement("textarea");
+    ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); done(); }catch(e){ toast("تعذّر النسخ"); }
+    ta.remove();
+  };
+  if(navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done).catch(fallback);
+  else fallback();
+}
+function bindField(id,key,after){
+  const el=$(id); if(!el) return;
+  el.value = S[key]||"";
+  el.addEventListener("input",()=>{ S[key]=el.value; save(); if(after) after(); });
+}
+function refreshChip(){ const c=$("#chipTopic"), t=S.topic.trim(); c.hidden=!t; c.textContent=t; }
+function applyTheme(){
+  if(S.theme) document.documentElement.setAttribute("data-theme",S.theme);
+  else document.documentElement.removeAttribute("data-theme");
+}
+function goStage(n){
+  $$("#rail button").forEach(x=>x.setAttribute("aria-current", String(x.dataset.stage===n)));
+  $$("[data-panel]").forEach(p=>p.hidden = (p.dataset.panel!==n));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function init(){
+  load();
+  bindField("#fTopic","topic",()=>{ refreshChip(); buildBriefs(); });
+  bindField("#fHorizon","horizon",buildBriefs);
+  bindField("#fAudience","audience",buildBriefs);
+  bindField("#fAsOf","asOf",buildBriefs);
+  bindField("#fPremises","premises");
+
+  refreshChip(); applyTheme();
+  buildDomains(); buildBriefs(); buildCases(); buildSix(); buildSkeleton();
+  Object.keys(COLS).forEach(buildTable);
+
+  $$("[data-add]").forEach(b=>b.addEventListener("click",()=>{
+    const id=b.dataset.add; S[id].push({}); save(); buildTable(id);
+  }));
+  $$("#rail button").forEach(b=>b.addEventListener("click",()=>goStage(b.dataset.stage)));
+  $("#btnExport").addEventListener("click",()=>goStage("4"));
+  $("#btnTheme").addEventListener("click",()=>{
+    const isDark = document.documentElement.getAttribute("data-theme")==="dark" ||
+      (!document.documentElement.hasAttribute("data-theme") &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches);
+    S.theme = isDark ? "light" : "dark"; save(); applyTheme();
+  });
+  $("#btnCopyAll").addEventListener("click",()=>copy(buildMd(),"نُسخت الوثيقة كاملةً"));
+  $("#btnDownload").addEventListener("click",()=>{
+    const name=(S.topic.trim()||"تقييم-موقف").replace(/[\/\\?%*:|"<>]/g,"-").slice(0,60);
+    const blob=new Blob([buildMd()],{type:"text/markdown;charset=utf-8"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob); a.download=name+".md";
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },0);
+  });
+  $("#btnReset").addEventListener("click",()=>{
+    if(!confirm("تفريغ كل الحقول؟ لا يمكن التراجع.")) return;
+    S = blank(); try{ localStorage.removeItem(KEY); }catch(e){}
+    location.reload();
+  });
+}
+init();
+</script>
+</body>
+</html>
